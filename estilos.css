@@ -156,3 +156,37 @@ body.memory-playing{padding:6px 8px;display:block}
 .catalog-select-row select{font:inherit;max-width:min(94vw,350px);padding:5px 8px;border-radius:8px;background:#fff;color:#102438;border:2px solid #167c99}
 .app.memory-playing>.catalog-select-row{display:none}
 @media(max-width:480px){.dev-version{font-size:9px;padding:2px 4px}.catalog-select-row{font-size:.8rem}}
+
+/* Alfa 4: identidad declarada por cada catálogo. Los valores predeterminados
+   reproducen la interfaz de laboratorio. */
+:root{
+ --tema-acento:#21d9ff;--tema-principal:#ffd43b;--tema-secundario:#fff8e8;
+ --tema-texto:#101010;--tema-panel:#0d2340;--tema-panel-texto:#fff8e8;
+ --tema-modal:#fff8e8;--tema-modal-texto:#101010;--tema-borde:#111111;
+ --tema-reverso-inicio:#32c8d8;--tema-reverso-fin:#157b9e;
+}
+/* Selector global por encima del título y de los controles de juego. */
+.catalog-select-row{
+ display:flex;flex-direction:column;align-items:center;gap:7px;
+ width:min(100%,500px);margin:0 auto 12px;padding:10px 16px;
+ background:color-mix(in srgb,var(--tema-panel) 91%,transparent);
+ color:var(--tema-panel-texto);border:2px solid var(--tema-borde);
+ border-radius:16px;text-shadow:0 1px 2px #000a;
+}
+.catalog-select-row select{width:min(100%,360px);max-width:100%;border-color:var(--tema-acento);text-shadow:none}
+.title{color:var(--tema-acento);background:color-mix(in srgb,var(--tema-panel) 85%,transparent)}
+.study-tools,.random-instruction,.memory-instruction{background:color-mix(in srgb,var(--tema-panel) 94%,transparent);color:var(--tema-panel-texto);border-color:var(--tema-borde)}
+.random-instruction,.memory-instruction{color:var(--tema-principal)}
+.level-note{color:var(--tema-panel-texto);opacity:.9}
+.mode-nav button,.secondary,.category-filters button,.abandon-btn{background:var(--tema-secundario);color:var(--tema-texto)}
+.mode-nav button[aria-pressed=true],.description-btn{background:var(--tema-acento);color:var(--tema-texto)}
+button{background:var(--tema-principal);color:var(--tema-texto);border-color:var(--tema-borde)}
+.category-filters button[aria-pressed=true]{background:var(--tema-principal)}
+.modal-box{background:var(--tema-modal);color:var(--tema-modal-texto);border-color:var(--tema-borde)}
+.memory-stats{background:color-mix(in srgb,var(--tema-panel) 92%,transparent);color:var(--tema-panel-texto)}
+.memory-tile .memory-back{background:linear-gradient(145deg,var(--tema-reverso-inicio),var(--tema-reverso-fin))}
+.study-empty{background:var(--tema-panel);color:var(--tema-panel-texto)}
+#memoryResultsSummary{color:var(--tema-panel-texto)}
+/* En memoria el selector no ocupa espacio vertical durante la partida. */
+.app.memory-playing>.catalog-select-row{display:none}
+@media(max-width:480px){.catalog-select-row{padding:8px 10px;margin-bottom:8px}}

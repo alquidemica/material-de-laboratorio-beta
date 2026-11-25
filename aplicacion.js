@@ -42,16 +42,20 @@ function renderCard(id){
 async function loadApp(){
  try{
   $('catalogSelect').value=selectedCatalog;
-  await catalogManager.load(`${ALLOWED_CATALOGS[selectedCatalog]}?v=4.4a3`);
+  await catalogManager.load(`${ALLOWED_CATALOGS[selectedCatalog]}?v=4.4a4`);
   TOTAL=catalogManager.getIds().length;
   document.title=`${catalogManager.config.nombre} · Alquidémica`;
-  $('memorySetup').querySelector('.level-note').textContent=`Busca parejas iguales. Las cartas se eligen al azar entre ${TOTAL} elementos de esta baraja.`;
-  $('studySearch').placeholder=catalogManager.config.ejemploBusqueda||'Buscar carta…';
-  $('studySearch').parentElement.firstChild.textContent='Buscar carta';
-  if(selectedCatalog!=='laboratorio'){
-   $('studyPanel').querySelector('.level-note').textContent='Baraja experimental: los 12 elementos están disponibles para probar el motor en todos los niveles.';
-   $('randomSetup').querySelector('.level-note').textContent='Baraja experimental de elementos químicos. Evalúa honestamente tus respuestas.';
-  }
+  applyCatalogTheme(catalogManager.config);
+  $('pageTitle').textContent=catalogModeTitle('lottery');
+  const setInstruction=(id,key,fallback)=>{$(id).textContent=catalogInstruction(key,fallback);};
+  setInstruction('lotteryHint','loteriaPista','Durante la partida también puedes usar Espacio o →');
+  setInstruction('studySearchLabel','buscarEtiqueta','Buscar carta');
+  $('studySearch').placeholder=catalogInstruction('buscarEjemplo',catalogManager.config.ejemploBusqueda||'Buscar carta…');
+  setInstruction('studyIntro','estudioNota','Explora el catálogo por nivel y categoría.');
+  setInstruction('emptyStudy','estudioVacio','No se encontraron cartas.');
+  setInstruction('randomIntro','aleatorioPreparacion','Evalúa tus respuestas y repasa los conceptos.');
+  setInstruction('randomInstruction','aleatorioInstruccion','Intenta identificar la carta antes de ver su descripción.');
+  setInstruction('memoryIntro','memoriaPreparacion','Encuentra parejas idénticas de la baraja seleccionada.');
   // Precarga escalonada con límite de seis imágenes simultáneas.
   const pending=[0,...catalogManager.getIds()];
   let loaded=0,next=0;
@@ -95,7 +99,7 @@ function revealLotteryCard(){
  if(activeMode!=='lottery'||loading||changing||modalOpen||memoryLocked||randomLocked)return;
  if(currentCard!==0){openDescription(currentCard,card);return;}
  $('randomRating').classList.add('hidden');$('randomFeedback').classList.add('hidden');
- descriptionTitle.textContent='¿Comenzamos la lotería?';descriptionText.textContent='';
+ descriptionTitle.textContent=catalogInstruction('preguntaInicio','¿Comenzamos la lotería?');descriptionText.textContent='';
  $('startCoverBtn').classList.remove('hidden');closeBtn.textContent='CANCELAR';closeBtn.disabled=false;
  descriptionTrigger=card;modalOpen=true;modal.classList.add('cover-dialog');modal.classList.remove('hidden');
  $('app').inert=true;document.body.classList.add('modal-open');syncButtons();$('startCoverBtn').focus({preventScroll:true});

@@ -43,7 +43,7 @@ function switchMode(mode){
  $('memoryPanel').classList.toggle('hidden',mode!=='memory');
  $('app').classList.toggle('study-active',studying||mode==='memory');
  document.body.classList.toggle('study-active',studying||mode==='memory');
- $('pageTitle').textContent=mode==='study'?'Estudio libre':mode==='random'?'Estudio aleatorio':mode==='memory'?'Memoria':'Lotería';
+ $('pageTitle').textContent=catalogModeTitle(mode);
  $('lotteryMode').setAttribute('aria-pressed',String(mode==='lottery'));
  $('studyMode').setAttribute('aria-pressed',String(studying));
  $('randomMode').setAttribute('aria-pressed',String(mode==='random'));

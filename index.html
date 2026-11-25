@@ -4,16 +4,23 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <title>Material de laboratorio</title>
-  <link rel="stylesheet" href="estilos.css?v=4.4a3">
-  <script src="catalogo.js?v=4.4a3" defer></script>
-  <script src="aplicacion.js?v=4.4a3" defer></script>
-  <script src="estudio.js?v=4.4a3" defer></script>
-  <script src="estudio-aleatorio.js?v=4.4a3" defer></script>
-  <script src="memoria.js?v=4.4a3" defer></script>
+  <link rel="stylesheet" href="estilos.css?v=4.4a4">
+  <script src="catalogo.js?v=4.4a4" defer></script>
+  <script src="aplicacion.js?v=4.4a4" defer></script>
+  <script src="estudio.js?v=4.4a4" defer></script>
+  <script src="estudio-aleatorio.js?v=4.4a4" defer></script>
+  <script src="memoria.js?v=4.4a4" defer></script>
 </head>
 <body>
-<div class="dev-version" id="devVersion" aria-label="Versión de pruebas">v4.4 · Alfa 3</div>
+<div class="dev-version" id="devVersion" aria-label="Versión de pruebas">v4.4 · Alfa 4</div>
 <main class="app" id="app">
+  <div class="catalog-select-row" id="catalogSelectRow">
+    <label for="catalogSelect">SELECCIONAR BARAJA</label>
+    <select id="catalogSelect" aria-label="Seleccionar baraja">
+      <option value="laboratorio">Material de laboratorio (42 cartas)</option>
+      <option value="elementos-demo">Elementos químicos (12 cartas · demostración)</option>
+    </select>
+  </div>
   <h1 class="title" id="pageTitle">Lotería</h1>
   <nav class="mode-nav" aria-label="Modo de aprendizaje">
     <button id="lotteryMode" aria-pressed="true">LOTERÍA</button>
@@ -21,13 +28,7 @@
     <button id="randomMode" aria-pressed="false" disabled>ESTUDIO ALEATORIO</button>
     <button id="memoryMode" aria-pressed="false" disabled>MEMORIA</button>
   </nav>
-  <div class="catalog-select-row" id="catalogSelectRow">
-    <label for="catalogSelect">Baraja de prueba</label>
-    <select id="catalogSelect" aria-label="Elegir baraja">
-      <option value="laboratorio">Material de laboratorio (42 cartas)</option>
-      <option value="elementos-demo">Elementos químicos (12 cartas · demostración)</option>
-    </select>
-  </div>
+
   <section id="lotteryPanel">
     <div class="stage">
       <div class="card-shell" id="cardShell">
@@ -47,15 +48,15 @@
       <button id="descriptionBtn" class="description-btn" disabled>DESCRIPCIÓN</button>
       <button id="shuffleBtn" class="secondary hidden">↻ BARAJAR</button>
     </div>
-    <div class="hint">Durante la partida también puedes usar Espacio o →</div>
+    <div class="hint" id="lotteryHint">Durante la partida también puedes usar Espacio o →</div>
   </section>
   <section id="studyPanel" class="hidden" aria-label="Estudio libre">
     <div class="study-tools">
       <div class="study-fields">
-        <label>Buscar material<input id="studySearch" type="search" placeholder="Ej. matraz, pipeta…" autocomplete="off"></label>
+        <label><span id="studySearchLabel">Buscar material</span><input id="studySearch" type="search" placeholder="Ej. matraz, pipeta…" autocomplete="off"></label>
         <label>Nivel académico<select id="studyLevel"><option value="1">Secundaria</option><option value="2">Preparatoria</option><option value="3">Universidad</option></select></label>
       </div>
-      <p class="level-note">Catálogo inicial: todos los materiales están disponibles mientras se define su clasificación académica.</p>
+      <p class="level-note" id="studyIntro">Catálogo inicial: todos los materiales están disponibles mientras se define su clasificación académica.</p>
       <div id="categoryFilters" class="category-filters" role="group" aria-label="Filtrar por función"></div>
       <p id="studyCount" class="study-count" role="status"></p>
     </div>
@@ -69,12 +70,12 @@
         <label>Nivel académico<select id="randomLevel"><option value="1">Secundaria</option><option value="2">Preparatoria</option><option value="3">Universidad</option></select></label>
         <label>Categoría<select id="randomCategory"><option value="0">Todos</option></select></label>
       </div>
-      <p class="level-note">Catálogo inicial disponible en todos los niveles. Evalúa honestamente tus respuestas.</p>
+      <p class="level-note" id="randomIntro">Catálogo inicial disponible en todos los niveles. Evalúa honestamente tus respuestas.</p>
       <p id="randomCount" role="status"></p>
       <button id="randomStart">COMENZAR SESIÓN</button>
     </div>
     <div id="randomSession" class="hidden">
-      <p class="random-instruction">Trata de decir la función del material antes de revelar su descripción.</p>
+      <p class="random-instruction" id="randomInstruction">Trata de decir la función del material antes de revelar su descripción.</p>
       <div class="random-progress"><progress id="randomProgress" value="0" max="42" aria-label="Materiales dominados"></progress><p id="randomStatus" role="status"></p></div>
       <div class="stage"><div class="card-shell"><article class="card" id="randomCard" role="button" tabindex="0"><div class="card-inner"><div class="card-number"></div><span id="randomCardIcon" class="random-card-icon" data-state="unseen" role="img" aria-label="Por evaluar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><g data-icon="unseen"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></g><g data-icon="known"><path d="m4 12 5 5L20 6"/></g><g data-icon="review"><path d="M5 3h14M5 21h14M7 3v4c0 2 2 4 5 5-3 1-5 3-5 5v4m10-18v4c0 2-2 4-5 5 3 1 5 3 5 5v4"/></g></svg></span><img class="card-art" alt=""><div class="card-name"></div></div></article></div></div>
       <p id="randomCardStatus" class="status" role="status"></p>
@@ -92,7 +93,7 @@
   <section id="memoryPanel" class="hidden" aria-label="Juego de memoria">
     <div id="memorySetup" class="study-tools memory-setup">
       <h2>Prepara tu partida</h2>
-      <p class="level-note">Busca parejas del mismo material. Las cartas se eligen al azar de la baraja seleccionada.</p>
+      <p class="level-note" id="memoryIntro">Busca parejas del mismo material. Las cartas se eligen al azar de la baraja seleccionada.</p>
       <fieldset class="memory-levels"><legend>Dificultad</legend>
         <label><input type="radio" name="memoryPairs" value="4"> Muy fácil · 4 parejas</label>
         <label><input type="radio" name="memoryPairs" value="6" checked> Normal · 6 parejas</label>

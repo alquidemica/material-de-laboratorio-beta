@@ -1,5 +1,5 @@
 "use strict";
-/* Alquidémica v4.4 alpha 1: capa de datos independiente de los juegos.
+/* Alquidémica v4.4 alpha 4: capa de datos independiente de los juegos.
    El adaptador 'legacy' mantiene el formato de materiales.json y las 42 imágenes.
    En fases siguientes admitiremos texto por idioma/nivel sin cambiar los juegos. */
 class CatalogManager {
@@ -46,3 +46,37 @@ class CatalogManager {
 
 }
 const catalogManager=new CatalogManager();
+
+/* v4.4 Alfa 4: configuración visual y educativa declarativa.
+   Solo toma datos del manifiesto de la baraja seleccionada. */
+const DEFAULT_CATALOG_TITLES={lottery:'Lotería',study:'Estudio libre',random:'Estudio aleatorio',memory:'Memoria'};
+const CATALOG_COLOR_TOKENS={
+ acento:'--tema-acento',principal:'--tema-principal',secundario:'--tema-secundario',
+ texto:'--tema-texto',panel:'--tema-panel',panelTexto:'--tema-panel-texto',
+ modal:'--tema-modal',modalTexto:'--tema-modal-texto',borde:'--tema-borde',
+ reversoInicio:'--tema-reverso-inicio',reversoFin:'--tema-reverso-fin'
+};
+function applyCatalogTheme(config){
+ const root=document.documentElement,colors=config.tema?.colores||{};
+ for(const [key,token] of Object.entries(CATALOG_COLOR_TOKENS)){
+  const value=colors[key];
+  // Colores declarativos; no ejecutamos CSS arbitrario para los controles.
+  if(typeof value==='string'&&/^#[0-9a-fA-F]{3,8}$/.test(value))root.style.setProperty(token,value);
+  else root.style.removeProperty(token);
+ }
+ const fondo=config.tema?.fondo||{};
+ const bgColor=typeof fondo.color==='string'&&/^#[0-9a-fA-F]{3,8}$/.test(fondo.color)?fondo.color:'#15578b';
+ document.body.style.backgroundColor=bgColor;
+ if(fondo.tipo==='imagen'&&typeof fondo.valor==='string'&&/^[a-zA-Z0-9/_-]+\.(webp|png|jpg|jpeg|svg)$/.test(fondo.valor)){
+  document.body.style.backgroundImage=`url("${fondo.valor}")`;
+ }else if(fondo.tipo==='degradado'&&typeof fondo.valor==='string'&&fondo.valor.startsWith('radial-gradient(')){
+  document.body.style.backgroundImage=fondo.valor;
+ }else document.body.style.backgroundImage='none';
+ document.body.dataset.catalogTheme=config.id;
+}
+function catalogInstruction(key,fallback=''){
+ return catalogManager.config?.instrucciones?.[key]||fallback;
+}
+function catalogModeTitle(mode){
+ return catalogManager.config?.titulos?.[mode]||DEFAULT_CATALOG_TITLES[mode]||'Alquidémica';
+}
