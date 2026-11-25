@@ -5,14 +5,21 @@ const $ = (id) => document.getElementById(id);
 const card=$('card'), cardArt=$('cardArt'), cardName=$('cardName'), cardNumber=$('cardNumber'), logoReserve=$('logoReserve');
 const status=$('status'), mainBtn=$('mainBtn'), shuffleBtn=$('shuffleBtn'), descriptionBtn=$('descriptionBtn');
 const modal=$('descriptionModal'), descriptionTitle=$('descriptionTitle'), descriptionText=$('descriptionText'), closeBtn=$('closeDescriptionBtn');
-let materials={}, images=new Map(), deck=[], position=-1, currentCard=0;
+let images=new Map(), deck=[], position=-1, currentCard=0;
 let playing=false, finished=false, ready=false, loading=true, changing=false, modalOpen=false;
 let activeMode='lottery', descriptionTrigger=null, randomLocked=false, memoryLocked=false;
-let CATEGORIES={};
-function syncButtons(){const busy=loading||changing||modalOpen||randomLocked||memoryLocked;mainBtn.disabled=busy;shuffleBtn.disabled=busy;descriptionBtn.disabled=busy||currentCard===0||!materials[currentCard]?.descripcion;$('studyMode').disabled=busy;$('lotteryMode').disabled=changing||modalOpen||randomLocked||memoryLocked;$('randomMode').disabled=busy;$('memoryMode').disabled=busy;}
+// Única interfaz de contenido para todos los modos.
+function cardContent(id,level=1){return catalogManager.getCard(id,level);}
+function activeContentLevel(){
+ if(activeMode==='study')return Number($('studyLevel').value)||1;
+ if(activeMode==='random')return Number($('randomLevel').value)||1;
+ return 1;
+}
+function catalogCategories(){return catalogManager.getCategories();}
+function syncButtons(){const busy=loading||changing||modalOpen||randomLocked||memoryLocked;mainBtn.disabled=busy;shuffleBtn.disabled=busy;descriptionBtn.disabled=busy||currentCard===0||!cardContent(currentCard,activeContentLevel())?.descripcion;$('studyMode').disabled=busy;$('lotteryMode').disabled=changing||modalOpen||randomLocked||memoryLocked;$('randomMode').disabled=busy;$('memoryMode').disabled=busy;}
 // Una sola plantilla lógica para lotería y estudio libre.
 function populateCard(element,id){
- const m=materials[id]||{}, art=element.querySelector('.card-art'), name=element.querySelector('.card-name');
+ const m=cardContent(id,activeContentLevel())||{}, art=element.querySelector('.card-art'), name=element.querySelector('.card-name');
  element.classList.toggle('cover',id===0);
  element.style.setProperty('--outer',id===0?'#a65add':m.marco||'#54cdbc');
  art.src=images.get(id)?.src||catalogManager.imageUrl(id);
@@ -26,17 +33,15 @@ function renderCard(id){
  currentCard=id;
  populateCard(card,id);
  logoReserve.classList.toggle('hidden',id!==0);
- card.setAttribute('aria-label',id===0?'Portada':`Carta ${id}, ${materials[id].nombre}`);
+ card.setAttribute('aria-label',id===0?'Portada':`Carta ${id}, ${cardContent(id,activeContentLevel()).nombre}`);
  card.classList.remove('pop');void card.offsetWidth;card.classList.add('pop');syncButtons();
 }
 async function loadApp(){
  try{
   await catalogManager.load('catalogos/laboratorio.json?v=4.4a1');
-  materials=catalogManager.items;
-  TOTAL=catalogManager.ids.length;
-  CATEGORIES=catalogManager.categories;
+  TOTAL=catalogManager.getIds().length;
   // Precarga escalonada con límite de seis imágenes simultáneas.
-  const pending=[0,...catalogManager.ids];
+  const pending=[0,...catalogManager.getIds()];
   let loaded=0,next=0;
   async function worker(){while(next<pending.length){
    const id=pending[next++],url=catalogManager.imageUrl(id),image=new Image();
@@ -51,7 +56,7 @@ async function loadApp(){
 function shuffled(ids){const result=[...ids];for(let i=result.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[result[i],result[j]]=[result[j],result[i]];}return result;}
 function eligibleIds(level,category=0){return catalogManager.eligibleIds(level,category);}
 function shuffleDeck(){if(loading||changing||modalOpen||randomLocked)return;
- deck=shuffled(catalogManager.ids);
+ deck=shuffled(catalogManager.getIds());
  position=-1;playing=false;finished=false;ready=true;renderCard(0);
  status.textContent=`Mazo barajado · ${TOTAL} cartas`;mainBtn.textContent='COMENZAR';shuffleBtn.classList.remove('hidden');syncButtons();}
 function startGame(){if(loading||changing||modalOpen)return;if(!ready)shuffleDeck();playing=true;ready=false;finished=false;mainBtn.textContent='ECHAR CARTA';drawNext();}
@@ -61,9 +66,10 @@ function drawNext(){if(!playing||finished||loading||changing||modalOpen)return;
  if(position===deck.length-1)mainBtn.textContent='TERMINAR';
  requestAnimationFrame(()=>requestAnimationFrame(()=>{changing=false;syncButtons();}));}
 function endGame(){finished=true;playing=false;ready=false;status.innerHTML=`<span class="finished">¡LOTERÍA!</span><br>Se han echado las ${TOTAL} cartas.`;mainBtn.textContent='BARAJAR DE NUEVO';shuffleBtn.classList.add('hidden');syncButtons();}
-function openDescription(id=currentCard,trigger=document.activeElement){if(id===0||!materials[id]||loading||changing||modalOpen)return;
+function openDescription(id=currentCard,trigger=document.activeElement){if(id===0||!cardContent(id,activeContentLevel())||loading||changing||modalOpen)return;
  $('randomRating').classList.add('hidden');$('randomFeedback').classList.add('hidden');closeBtn.disabled=false;closeBtn.classList.remove('hidden');
- descriptionTitle.textContent=materials[id].nombre;descriptionText.textContent=materials[id].descripcion;
+ const content=cardContent(id,activeContentLevel());
+ descriptionTitle.textContent=content.nombre;descriptionText.textContent=content.descripcion;
  descriptionTrigger=trigger;modalOpen=true;modal.classList.remove('hidden');$('app').inert=true;document.body.classList.add('modal-open');syncButtons();closeBtn.focus({preventScroll:true});}
 function closeDescription(){if(!modalOpen||closeBtn.disabled)return;modalOpen=false;modal.classList.add('hidden');modal.classList.remove('cover-dialog');$('startCoverBtn').classList.add('hidden');closeBtn.textContent='ENTENDIDO';$('app').inert=false;document.body.classList.remove('modal-open');syncButtons();descriptionTrigger?.focus({preventScroll:true});descriptionTrigger=null;if(activeMode==='random')afterRandomDescription();if(activeMode==='memory')afterMemoryDescription();}
 mainBtn.addEventListener('click',()=>{if(finished){shuffleDeck();return;}if(!playing){startGame();return;}drawNext();});
