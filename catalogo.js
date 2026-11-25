@@ -21,8 +21,22 @@ class CatalogManager {
   return this;
  }
  async readJson(url){const r=await fetch(url,{cache:'no-cache'});if(!r.ok)throw new Error(`No se pudo cargar ${url}`);return r.json();}
- eligibleIds(level,category=0){return this.ids.filter(id=>this.items[id].nivel<=level&&(!category||this.items[id].categorias.includes(category)));}
- imageUrl(id){return id===0?this.config.portada:this.config.imagenes.replaceAll('{id}',String(id));}
+ eligibleIds(level,category=0,novelty='all'){
+  const academicLevel=Number(level);
+  return this.ids.filter(id=>{
+   const item=this.items[id];
+   return item.nivel<=academicLevel && (!category||item.categorias.includes(Number(category))) &&
+    (novelty==='all'||(novelty==='new'&&item.nivel===academicLevel));
+  });
+ }
+ countByLevel(level,novelty='all'){return this.eligibleIds(level,0,novelty).length;}
+ getLevelName(level){return this.config?.niveles?.find(l=>Number(l.id)===Number(level))?.nombre||`Nivel ${level}`;}
+ imageUrl(id){
+  if(id===0)return this.config.portada;
+  const override=this.items[id]?.imagen;
+  if(typeof override==='string'&&/^[a-zA-Z0-9/_-]+\.(webp|png|jpg|jpeg|svg)(\?v=[a-zA-Z0-9.]+)?$/.test(override))return override;
+  return this.config.imagenes.replaceAll('{id}',String(id));
+ }
  // La primera ficha de nivel inferior se reutiliza hasta que exista una versión ampliada.
  getContent(id,{level=1,locale=this.locale}={}){
   const item=this.items[id];if(!item)return null;

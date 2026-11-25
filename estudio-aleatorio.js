@@ -22,7 +22,7 @@ class RandomSession {
 }
 let randomSession=null, randomInitialized=false, randomRated=false, randomMoved=false, randomNewRating=false;
 const randomLevel=$('randomLevel'),randomCategory=$('randomCategory');
-function randomIds(){return eligibleIds(Number(randomLevel.value),Number(randomCategory.value));}
+function randomIds(){return eligibleIds(Number(randomLevel.value),Number(randomCategory.value),$('randomNovelty').value);}
 function updateRandomSetup(){const n=randomIds().length;$('randomCount').textContent=`${n} cartas disponibles`;$('randomStart').disabled=!n;}
 function initRandom(){if(!randomInitialized){for(const [id,label] of Object.entries(catalogCategories())){const option=document.createElement('option');option.value=id;option.textContent=label;randomCategory.append(option);}randomInitialized=true;}updateRandomSetup();}
 function randomView(view){for(const id of ['randomSetup','randomSession','randomResults'])$(id).classList.toggle('hidden',id!==view);}
@@ -35,7 +35,7 @@ function afterRandomDescription(){if(!randomLocked)return;if(randomSession.compl
 function finishRandom(){const s=randomSession;randomLocked=false;syncButtons();randomView('randomResults');const hits=[...s.first.values()].filter(Boolean).length,total=s.cards.length;$('randomScore').textContent=`${(100*hits/total).toLocaleString('es-MX',{maximumFractionDigits:1})}%`;$('randomStats').replaceChildren();for(const [label,value] of [['Cartas estudiadas',total],['Aciertos iniciales',`${hits} de ${total}`],['Necesitaron repaso',s.reviewed.size],['Intentos totales',s.attempts],['Dominio final según autoevaluación',`${s.known.size} de ${total}`]]){const dt=document.createElement('dt'),dd=document.createElement('dd');dt.textContent=label;dd.textContent=value;$('randomStats').append(dt,dd);}$('randomResults').focus();}
 function resetRandom(){randomSession=null;randomLocked=false;randomRated=false;randomMoved=false;syncButtons();randomView('randomSetup');updateRandomSetup();$('randomStart').focus();}
 $('randomMode').addEventListener('click',()=>switchMode('random'));
-randomLevel.addEventListener('change',updateRandomSetup);randomCategory.addEventListener('change',updateRandomSetup);
+randomLevel.addEventListener('change',updateRandomSetup);randomCategory.addEventListener('change',updateRandomSetup);$('randomNovelty').addEventListener('change',updateRandomSetup);
 $('randomStart').addEventListener('click',startRandom);$('randomPrev').addEventListener('click',()=>navigateRandom(-1));$('randomNext').addEventListener('click',()=>navigateRandom(1));$('randomReveal').addEventListener('click',revealRandom);
 $('randomKnown').addEventListener('click',()=>rateRandom(true));$('randomReview').addEventListener('click',()=>rateRandom(false));$('randomAgain').addEventListener('click',resetRandom);
 $('randomAbandon').addEventListener('click',()=>{if(randomLocked&&!modalOpen&&confirm('¿Abandonar la sesión? No se guardará la puntuación.'))resetRandom();});

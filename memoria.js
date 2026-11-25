@@ -15,8 +15,18 @@ function memoryView(view){
 }
 function initMemory(){
  // La configuración permanece intacta al abandonar el modo antes de comenzar.
- $('memoryStart').disabled=loading||catalogManager.getIds().length<4;
+ updateMemoryCandidates();
 }
+function memoryCandidateIds(){return eligibleIds(Number($('memoryLevel').value),0,$('memoryNovelty').value);}
+function updateMemoryCandidates(){
+ const available=memoryCandidateIds().length;
+ const required=Number(document.querySelector('input[name="memoryPairs"]:checked')?.value||6);
+ $('memoryCandidateCount').textContent=`${available} cartas disponibles para elegir · se necesitan ${required} parejas`;
+ $('memoryStart').disabled=loading||available<required;
+}
+$('memoryLevel').addEventListener('change',updateMemoryCandidates);
+$('memoryNovelty').addEventListener('change',updateMemoryCandidates);
+document.querySelectorAll('input[name="memoryPairs"]').forEach(r=>r.addEventListener('change',updateMemoryCandidates));
 function memoryDuration(game){
  return game.elapsed+(game.runningSince===null?0:performance.now()-game.runningSince);
 }
@@ -115,7 +125,7 @@ function startMemory(){
  if(activeMode!=='memory'||loading||modalOpen||memoryLocked)return;
  const pairs=Number(document.querySelector('input[name="memoryPairs"]:checked')?.value||6);
  if(![4,6,9,12].includes(pairs))return;
- const candidates=catalogManager.getIds().filter(id=>cardContent(id)?.nombre);
+ const candidates=memoryCandidateIds().filter(id=>cardContent(id,Number($('memoryLevel').value))?.nombre);
  if(candidates.length<pairs){alert('No hay suficientes cartas para iniciar.');return;}
  const ids=shuffled(candidates).slice(0,pairs);
  const cards=shuffled(ids.flatMap(id=>[{id,unique:`${id}-a`},{id,unique:`${id}-b`}]));
@@ -127,11 +137,11 @@ function startMemory(){
   const tile=document.createElement('button');tile.type='button';tile.className='memory-tile';
   tile.dataset.index=i;tile.dataset.id=entry.id;tile.setAttribute('aria-label',`Carta boca abajo, posición ${i+1}`);
   const back=document.createElement('span');back.className='memory-back';back.textContent='?';back.setAttribute('aria-hidden','true');
-  const front=document.createElement('span');front.className='memory-front';front.style.setProperty('--outer',cardContent(entry.id).marco||'#54cdbc');
+  const front=document.createElement('span');front.className='memory-front';front.style.setProperty('--outer',cardContent(entry.id,Number($('memoryLevel').value)).marco||'#54cdbc');
   const inner=document.createElement('span');inner.className='memory-front-inner';
   const num=document.createElement('span');num.className='memory-front-number';num.textContent=entry.id;
   const art=document.createElement('img');art.className='memory-front-img';art.alt='';art.loading='eager';art.src=images.get(entry.id)?.src||catalogManager.imageUrl(entry.id);
-  const name=document.createElement('span');name.className='memory-front-name';name.textContent=cardContent(entry.id).nombre;
+  const name=document.createElement('span');name.className='memory-front-name';name.textContent=cardContent(entry.id,Number($('memoryLevel').value)).nombre;
   inner.append(num,art,name);front.append(inner);tile.append(back,front);fragment.append(tile);
  });
  $('memoryGrid').replaceChildren(fragment);
@@ -150,7 +160,7 @@ function flipMemory(index,flipped){
  const tile=memoryTile(index);if(!tile)return;
  tile.classList.toggle('is-flipped',flipped);
  const id=g.cards[index].id;
- tile.setAttribute('aria-label',flipped?`Carta ${id}, ${cardContent(id).nombre}`:`Carta boca abajo, posición ${index+1}`);
+ tile.setAttribute('aria-label',flipped?`Carta ${id}, ${cardContent(id,Number($('memoryLevel').value)).nombre}`:`Carta boca abajo, posición ${index+1}`);
  tile.setAttribute('aria-pressed',String(flipped));
 }
 function selectMemory(index){
@@ -176,7 +186,7 @@ function selectMemory(index){
  for(const i of [first,second]){
   const tile=memoryTile(i);
   tile.classList.add('is-matched');tile.disabled=true;
-  tile.setAttribute('aria-label',`Pareja encontrada: ${cardContent(g.cards[i].id).nombre}`);
+  tile.setAttribute('aria-label',`Pareja encontrada: ${cardContent(g.cards[i].id,Number($('memoryLevel').value)).nombre}`);
  }
  g.open=[];updateMemoryStats();memoryStopClock();memoryPendingDescription=true;
  // Esperar un instante para que la pareja acertada sea visible antes de abrir la ficha.

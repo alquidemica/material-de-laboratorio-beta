@@ -1,0 +1,32 @@
+ALQUIDÉMICA v4.4 ALFA 5 — SOLO ARCHIVOS MODIFICADOS
+
+1. Reemplaza los archivos del ZIP en el repositorio BETA respetando las rutas.
+2. NO actualices aún el repositorio principal (v4.3.2).
+3. No borres las imágenes WebP existentes ni los SVG de elementos-demo.
+
+PROPÓSITO
+- 42 instrumentos actuales conservados en secundaria.
+- 5 prototipos nuevos para preparatoria: IDs 43–47.
+- 5 prototipos nuevos para universidad: IDs 48–52.
+- Mazos acumulativos: secundaria 42 / preparatoria 47 / universidad 52.
+- Selección "Todos" o "Solo nuevos del nivel" en Lotería, Estudio libre, Aleatorio y Memorama.
+- Ejemplos de descripciones por nivel (vaso de precipitados, bureta y prototipos).
+- Ilustraciones SVG provisionales identificadas como DEMO, NO definitivas.
+- Instrucciones más visibles y mejor contraste.
+
+PRUEBAS SUGERIDAS
+[ ] Lotería en Secundaria: 42 cartas.
+[ ] Lotería en Preparatoria: 47 cartas; Solo nuevos: 5.
+[ ] Lotería en Universidad: 52 cartas; Solo nuevos: 5.
+[ ] Estudio libre: filtros de nuevos y categorías sin errores.
+[ ] Vaso de precipitados: descripción diferente en cada nivel.
+[ ] Estudio aleatorio: 5 tarjetas nuevas en Prepa y Universidad, sin repeticiones.
+[ ] Memoria: con "Solo nuevos" funciona la dificultad de 4 parejas, y 6/9/12 quedan deshabilitadas.
+[ ] Memoria con catálogo acumulado permite los cuatro niveles de dificultad.
+[ ] Elementos químicos (demo) continúa con 12 cartas, cuatro modos y estilo propio.
+[ ] La rotación de celular conserva el tablero y sus resultados.
+[ ] Instrucciones legibles en PC y celular.
+
+ADVERTENCIA
+Los 10 instrumentos adicionales, descripciones y SVG son prototipos de validación
+arquitectónica, NO contenido editorial aprobado. Reemplazarlos en futuras sesiones.

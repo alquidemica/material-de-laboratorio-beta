@@ -6,7 +6,7 @@ const normalizeSearch = value => value.normalize('NFD').replace(/[\u0300-\u036f]
 
 function getStudyIds(){
  const query=normalizeSearch(studySearch.value), level=Number(studyLevel.value);
- return eligibleIds(level,selectedCategory).filter(id=>normalizeSearch(cardContent(id,level).nombre).includes(query));
+ return eligibleIds(level,selectedCategory,$('studyNovelty').value).filter(id=>normalizeSearch(cardContent(id,level).nombre).includes(query));
 }
 function renderStudyGrid(){
  const level=Number(studyLevel.value);
@@ -57,6 +57,7 @@ $('lotteryMode').addEventListener('click',()=>switchMode('lottery'));
 $('studyMode').addEventListener('click',()=>switchMode('study'));
 studySearch.addEventListener('input',renderStudyGrid);
 studyLevel.addEventListener('change',renderStudyGrid);
+$('studyNovelty').addEventListener('change',renderStudyGrid);
 $('categoryFilters').addEventListener('click',event=>{
  const button=event.target.closest('button[data-category]');if(!button)return;
  selectedCategory=Number(button.dataset.category);
