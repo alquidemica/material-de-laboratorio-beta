@@ -33,5 +33,42 @@
   "idiomaBase": "es",
   "idiomasDisponibles": [
     "es"
-  ]
+  ],
+  "tema": {
+    "fondo": {
+      "tipo": "imagen",
+      "valor": "fondo-laboratorio.webp",
+      "color": "#15578b"
+    },
+    "colores": {
+      "acento": "#21d9ff",
+      "principal": "#ffd43b",
+      "secundario": "#fff8e8",
+      "texto": "#101010",
+      "panel": "#0d2340",
+      "panelTexto": "#fff8e8",
+      "modal": "#fff8e8",
+      "modalTexto": "#101010",
+      "borde": "#111111",
+      "reversoInicio": "#32c8d8",
+      "reversoFin": "#157b9e"
+    }
+  },
+  "titulos": {
+    "lottery": "Lotería",
+    "study": "Estudio libre",
+    "random": "Estudio aleatorio",
+    "memory": "Memoria"
+  },
+  "instrucciones": {
+    "loteriaPista": "Durante la partida también puedes usar Espacio o →",
+    "preguntaInicio": "¿Comenzamos la lotería?",
+    "buscarEtiqueta": "Buscar material",
+    "buscarEjemplo": "Ej. matraz, pipeta…",
+    "estudioNota": "Catálogo inicial: todos los materiales están disponibles mientras se define su clasificación académica.",
+    "estudioVacio": "No se encontraron materiales. Prueba otra búsqueda o categoría.",
+    "aleatorioPreparacion": "Catálogo inicial disponible en todos los niveles. Evalúa honestamente tus respuestas.",
+    "aleatorioInstruccion": "Trata de decir la función del material antes de revelar su descripción.",
+    "memoriaPreparacion": "Busca parejas del mismo material. Las cartas se eligen al azar de la baraja seleccionada."
+  }
 }
