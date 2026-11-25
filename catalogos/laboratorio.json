@@ -1,0 +1,37 @@
+{
+  "id": "laboratorio",
+  "nombre": "Material de laboratorio",
+  "version": 1,
+  "datos": "../materiales.json",
+  "imagenes": "cartas/{id}.webp?v=4",
+  "portada": "cartas/0.webp?v=4",
+  "niveles": [
+    {
+      "id": 1,
+      "nombre": "Secundaria"
+    },
+    {
+      "id": 2,
+      "nombre": "Preparatoria"
+    },
+    {
+      "id": 3,
+      "nombre": "Universidad"
+    }
+  ],
+  "categorias": {
+    "1": "Medición volumétrica",
+    "2": "Sujeción y soporte",
+    "3": "Calentamiento",
+    "4": "Contención y reacción",
+    "5": "Separación y destilación",
+    "6": "Medición de propiedades",
+    "7": "Manipulación y transferencia",
+    "8": "Almacenamiento y cierre",
+    "9": "Limpieza"
+  },
+  "idiomaBase": "es",
+  "idiomasDisponibles": [
+    "es"
+  ]
+}

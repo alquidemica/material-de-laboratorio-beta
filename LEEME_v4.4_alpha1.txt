@@ -1,0 +1,25 @@
+ALQUIDÉMICA — v4.4 ALFA 1 — GESTOR DE CATÁLOGOS
+
+Base: copia local v4.3.2 consolidada a partir de entregas previas.
+No se pudo contrastar directamente con GitHub: comparar cambios propios antes de reemplazar.
+
+Cambios:
+- catalogo.js: gestor de datos, comprobación de fichas, niveles acumulativos, rutas.
+- catalogos/laboratorio.json: manifiesto independiente de los juegos.
+- aplicacion.js: elimina TOTAL fijo y ruta fija; obtiene ids y categorías del gestor.
+- memoria.js: obtiene ids y rutas desde el gestor.
+- index.html: carga el gestor ANTES de aplicacion.js; renueva cache.
+
+Archivos de actualización: index.html, aplicacion.js, memoria.js, catalogo.js, catalogos/laboratorio.json.
+No reemplazar estilos.css ni los recursos gráficos.
+
+IMPORTANTE: Versión alfa para comprobar las cuatro modalidades con 42 cartas.
+Aún no ofrece selector de temática, ni traducciones, ni nuevos materiales.
+No publicar en producción antes de validar beta.
+
+Pruebas:
+1. Cargar 42 cartas, barajar y terminar lotería.
+2. Estudio libre: nueve categorías y filtros por nivel.
+3. Estudio aleatorio: evaluación, repaso y resultados.
+4. Memorama: 4, 6, 9 y 12 parejas, resultados y rotación.
+5. Si aparece error de carga, verificar la ruta catalogos/laboratorio.json.
