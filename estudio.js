@@ -6,14 +6,15 @@ const normalizeSearch = value => value.normalize('NFD').replace(/[\u0300-\u036f]
 
 function getStudyIds(){
  const query=normalizeSearch(studySearch.value), level=Number(studyLevel.value);
- return eligibleIds(level,selectedCategory).filter(id=>normalizeSearch(materials[id].nombre).includes(query));
+ return eligibleIds(level,selectedCategory).filter(id=>normalizeSearch(cardContent(id,level).nombre).includes(query));
 }
 function renderStudyGrid(){
+ const level=Number(studyLevel.value);
  const ids=getStudyIds(), fragment=document.createDocumentFragment();
  for(const id of ids){
   const tile=$('studyCardTemplate').content.firstElementChild.cloneNode(true);
   tile.dataset.id=id;
-  tile.setAttribute('aria-label',`Carta ${id}: ${materials[id].nombre}. Ver descripción`);
+  tile.setAttribute('aria-label',`Carta ${id}: ${cardContent(id,level).nombre}. Ver descripción`);
   populateCard(tile.querySelector('.card'),id);
   fragment.append(tile);
  }
@@ -23,7 +24,7 @@ function renderStudyGrid(){
 }
 function initStudy(){
  if(studyInitialized)return;
- for(const [id,label] of [[0,'Todos'],...Object.entries(CATEGORIES)]){
+ for(const [id,label] of [[0,'Todos'],...Object.entries(catalogCategories())]){
   const button=document.createElement('button');
   button.type='button';button.dataset.category=id;button.textContent=label;
   button.setAttribute('aria-pressed',String(Number(id)===selectedCategory));
