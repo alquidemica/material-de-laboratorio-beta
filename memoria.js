@@ -116,7 +116,7 @@ function startMemory(){
  const pairs=Number(document.querySelector('input[name="memoryPairs"]:checked')?.value||6);
  if(![4,6,9,12].includes(pairs))return;
  const candidates=catalogManager.getIds().filter(id=>cardContent(id)?.nombre);
- if(candidates.length<pairs){alert('No hay suficientes materiales para iniciar.');return;}
+ if(candidates.length<pairs){alert('No hay suficientes cartas para iniciar.');return;}
  const ids=shuffled(candidates).slice(0,pairs);
  const cards=shuffled(ids.flatMap(id=>[{id,unique:`${id}-a`},{id,unique:`${id}-b`}]));
  memoryRound++;

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="900" viewBox="0 0 800 900">
+<rect width="800" height="900" rx="60" fill="#d4f1fb"/>
+<rect x="26" y="26" width="748" height="848" rx="44" fill="#f9fcff" stroke="#214a63" stroke-width="10"/>
+<text x="82" y="136" font-family="Arial,Helvetica,sans-serif" font-size="70" font-weight="bold" fill="#1d465f">6</text>
+<text x="400" y="480" font-family="Arial,Helvetica,sans-serif" font-size="310" font-weight="bold" text-anchor="middle" fill="#12617f">C</text>
+<text x="400" y="615" font-family="Arial,Helvetica,sans-serif" font-size="49" font-weight="bold" text-anchor="middle" fill="#173e52">Carbono</text>
+<text x="400" y="680" font-family="Arial,Helvetica,sans-serif" font-size="34" text-anchor="middle" fill="#35677e">No metal</text>
+<text x="400" y="790" font-family="Arial,Helvetica,sans-serif" font-size="38" text-anchor="middle" fill="#173e52">Masa atómica: 12.011</text>
+</svg>

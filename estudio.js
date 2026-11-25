@@ -19,7 +19,7 @@ function renderStudyGrid(){
   fragment.append(tile);
  }
  studyGrid.replaceChildren(fragment);
- $('studyCount').textContent=`${ids.length} ${ids.length===1?'material encontrado':'materiales encontrados'}`;
+ $('studyCount').textContent=`${ids.length} ${ids.length===1?'carta encontrada':'cartas encontradas'}`;
  $('emptyStudy').classList.toggle('hidden',ids.length!==0);
 }
 function initStudy(){
