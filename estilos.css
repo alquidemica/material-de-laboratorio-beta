@@ -149,3 +149,10 @@ body.memory-playing{padding:6px 8px;display:block}
 #memoryResultsStats dt{min-width:0;overflow-wrap:break-word}
 #memoryResultsStats dd{text-align:right;font-variant-numeric:tabular-nums}
 @media(max-width:480px){#memoryResultsStats{max-width:360px;column-gap:12px;font-size:.9rem}}
+
+/* v4.4 alfa 3 — herramientas beta; retirar ocultando .dev-version en producción */
+.dev-version{position:fixed;top:calc(4px + env(safe-area-inset-top, 0px));right:calc(7px + env(safe-area-inset-right, 0px));z-index:40;pointer-events:none;background:rgba(8,24,40,.68);color:#f5f9ff;border:1px solid rgba(255,255,255,.25);border-radius:7px;padding:3px 6px;font:600 10px/1.2 system-ui,sans-serif;letter-spacing:.02em;opacity:.86}
+.catalog-select-row{display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:8px;margin:0 0 12px;font-size:.9rem;font-weight:700}
+.catalog-select-row select{font:inherit;max-width:min(94vw,350px);padding:5px 8px;border-radius:8px;background:#fff;color:#102438;border:2px solid #167c99}
+.app.memory-playing>.catalog-select-row{display:none}
+@media(max-width:480px){.dev-version{font-size:9px;padding:2px 4px}.catalog-select-row{font-size:.8rem}}

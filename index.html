@@ -4,14 +4,15 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <title>Material de laboratorio</title>
-  <link rel="stylesheet" href="estilos.css?v=4.3.2">
-  <script src="catalogo.js?v=4.4a2" defer></script>
-  <script src="aplicacion.js?v=4.4a2" defer></script>
-  <script src="estudio.js?v=4.4a2" defer></script>
-  <script src="estudio-aleatorio.js?v=4.4a2" defer></script>
-  <script src="memoria.js?v=4.4a2" defer></script>
+  <link rel="stylesheet" href="estilos.css?v=4.4a3">
+  <script src="catalogo.js?v=4.4a3" defer></script>
+  <script src="aplicacion.js?v=4.4a3" defer></script>
+  <script src="estudio.js?v=4.4a3" defer></script>
+  <script src="estudio-aleatorio.js?v=4.4a3" defer></script>
+  <script src="memoria.js?v=4.4a3" defer></script>
 </head>
 <body>
+<div class="dev-version" id="devVersion" aria-label="Versión de pruebas">v4.4 · Alfa 3</div>
 <main class="app" id="app">
   <h1 class="title" id="pageTitle">Lotería</h1>
   <nav class="mode-nav" aria-label="Modo de aprendizaje">
@@ -20,6 +21,13 @@
     <button id="randomMode" aria-pressed="false" disabled>ESTUDIO ALEATORIO</button>
     <button id="memoryMode" aria-pressed="false" disabled>MEMORIA</button>
   </nav>
+  <div class="catalog-select-row" id="catalogSelectRow">
+    <label for="catalogSelect">Baraja de prueba</label>
+    <select id="catalogSelect" aria-label="Elegir baraja">
+      <option value="laboratorio">Material de laboratorio (42 cartas)</option>
+      <option value="elementos-demo">Elementos químicos (12 cartas · demostración)</option>
+    </select>
+  </div>
   <section id="lotteryPanel">
     <div class="stage">
       <div class="card-shell" id="cardShell">
@@ -84,7 +92,7 @@
   <section id="memoryPanel" class="hidden" aria-label="Juego de memoria">
     <div id="memorySetup" class="study-tools memory-setup">
       <h2>Prepara tu partida</h2>
-      <p class="level-note">Busca parejas del mismo material. Las cartas se eligen al azar entre los 42 instrumentos del catálogo.</p>
+      <p class="level-note">Busca parejas del mismo material. Las cartas se eligen al azar de la baraja seleccionada.</p>
       <fieldset class="memory-levels"><legend>Dificultad</legend>
         <label><input type="radio" name="memoryPairs" value="4"> Muy fácil · 4 parejas</label>
         <label><input type="radio" name="memoryPairs" value="6" checked> Normal · 6 parejas</label>

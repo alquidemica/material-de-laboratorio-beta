@@ -8,6 +8,9 @@ const modal=$('descriptionModal'), descriptionTitle=$('descriptionTitle'), descr
 let images=new Map(), deck=[], position=-1, currentCard=0;
 let playing=false, finished=false, ready=false, loading=true, changing=false, modalOpen=false;
 let activeMode='lottery', descriptionTrigger=null, randomLocked=false, memoryLocked=false;
+const ALLOWED_CATALOGS=Object.freeze({laboratorio:'catalogos/laboratorio.json', 'elementos-demo':'catalogos/elementos-demo/manifest.json'});
+const catalogFromURL=new URLSearchParams(location.search).get('catalogo');
+const selectedCatalog=Object.hasOwn(ALLOWED_CATALOGS,catalogFromURL)?catalogFromURL:'laboratorio';
 // Única interfaz de contenido para todos los modos.
 function cardContent(id,level=1){return catalogManager.getCard(id,level);}
 function activeContentLevel(){
@@ -23,23 +26,32 @@ function populateCard(element,id){
  element.classList.toggle('cover',id===0);
  element.style.setProperty('--outer',id===0?'#a65add':m.marco||'#54cdbc');
  art.src=images.get(id)?.src||catalogManager.imageUrl(id);
- art.alt=id===0?'Ilustración de portada del laboratorio':m.nombre||`Material ${id}`;
+ art.alt=id===0?'Ilustración de portada de la baraja':m.nombre||`Carta ${id}`;
  element.querySelector('.card-number').textContent=id;
- name.textContent=id===0?'LOTERÍA DE MATERIAL DEL LABORATORIO':m.nombre||`Material ${id}`;
+ name.textContent=id===0?(catalogManager.config?.tituloPortada||'LOTERÍA DE MATERIAL DEL LABORATORIO'):m.nombre||`Carta ${id}`;
  name.classList.toggle('long',id!==0&&(m.nombre||'').length>20);
  name.classList.toggle('very-long',id!==0&&(m.nombre||'').length>31);
 }
 function renderCard(id){
  currentCard=id;
  populateCard(card,id);
- logoReserve.classList.toggle('hidden',id!==0);
+ logoReserve.classList.toggle('hidden',id!==0||selectedCatalog!=='laboratorio');
  card.setAttribute('aria-label',id===0?'Portada':`Carta ${id}, ${cardContent(id,activeContentLevel()).nombre}`);
  card.classList.remove('pop');void card.offsetWidth;card.classList.add('pop');syncButtons();
 }
 async function loadApp(){
  try{
-  await catalogManager.load('catalogos/laboratorio.json?v=4.4a1');
+  $('catalogSelect').value=selectedCatalog;
+  await catalogManager.load(`${ALLOWED_CATALOGS[selectedCatalog]}?v=4.4a3`);
   TOTAL=catalogManager.getIds().length;
+  document.title=`${catalogManager.config.nombre} · Alquidémica`;
+  $('memorySetup').querySelector('.level-note').textContent=`Busca parejas iguales. Las cartas se eligen al azar entre ${TOTAL} elementos de esta baraja.`;
+  $('studySearch').placeholder=catalogManager.config.ejemploBusqueda||'Buscar carta…';
+  $('studySearch').parentElement.firstChild.textContent='Buscar carta';
+  if(selectedCatalog!=='laboratorio'){
+   $('studyPanel').querySelector('.level-note').textContent='Baraja experimental: los 12 elementos están disponibles para probar el motor en todos los niveles.';
+   $('randomSetup').querySelector('.level-note').textContent='Baraja experimental de elementos químicos. Evalúa honestamente tus respuestas.';
+  }
   // Precarga escalonada con límite de seis imágenes simultáneas.
   const pending=[0,...catalogManager.getIds()];
   let loaded=0,next=0;
@@ -91,5 +103,15 @@ function revealLotteryCard(){
 card.addEventListener('click',revealLotteryCard);
 card.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();e.stopPropagation();revealLotteryCard();}});
 $('startCoverBtn').addEventListener('click',()=>{if(!modalOpen||!modal.classList.contains('cover-dialog'))return;closeDescription();startGame();});
+$('catalogSelect').addEventListener('change',event=>{
+ const target=event.target.value;
+ if(!Object.hasOwn(ALLOWED_CATALOGS,target))return;
+ if(modalOpen||randomLocked||memoryLocked){event.target.value=selectedCatalog;return;}
+ if(playing&&!confirm('Cambiar de baraja reiniciará la partida de lotería. ¿Continuar?')){event.target.value=selectedCatalog;return;}
+ const url=new URL(location.href);
+ if(target==='laboratorio')url.searchParams.delete('catalogo');
+ else url.searchParams.set('catalogo',target);
+ location.assign(url.href);
+});
 
 loadApp();

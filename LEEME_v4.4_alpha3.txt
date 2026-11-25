@@ -1,0 +1,25 @@
+ALQUIDÉMICA — v4.4 ALFA 3 — PRUEBA DE SEGUNDA BARAJA
+
+Base: v4.4 Alfa 2, validada por el usuario.
+
+NOVEDADES
+- Indicador fijo, discreto, v4.4 · Alfa 3, arriba a la derecha. Para quitarlo de producción, ocultar o eliminar el elemento #devVersion; el estilo está aislado en .dev-version.
+- Selector experimental de baraja: Material de laboratorio (42 cartas) / Elementos químicos (12 cartas).
+- La baraja de elementos es una DEMOSTRACIÓN TÉCNICA de 12 cartas SVG, NO es el catálogo definitivo de 118 elementos, ni el diseño gráfico final.
+- El selector recarga la página y reinicia toda la sesión. No se modifica la versión principal.
+- Ambas barajas usan los mismos cuatro modos y gestor de catálogos.
+
+INSTALACIÓN EN BETA
+Reemplazar: index.html, estilos.css, aplicacion.js, estudio.js, estudio-aleatorio.js, memoria.js.
+Agregar: catalogos/elementos-demo/manifest.json, elementos.json y la carpeta cartas/ con 13 ilustraciones SVG (portada + 12 elementos).
+Conservar: catalogo.js, catalogos/laboratorio.json, materiales.json, cartas/ (WebP), y cualquier archivo no indicado.
+
+PRUEBAS
+1. Cargar Material de laboratorio y comprobar las 42 cartas (en todos los juegos).
+2. Cambiar a Elementos químicos (demo); debe mostrar 12 cartas, filtros propios y fichas correctas.
+3. Memorama demo: las cuatro dificultades son posibles con 12 parejas máximas.
+4. Rotar y regresar a vertical; comprobar conservación de pares y puntuación.
+5. Volver a Material de laboratorio y comprobar que no se mezclaron cartas/categorías.
+6. Confirmar que aparece v4.4 · Alfa 3 arriba a la derecha y no tapa botones.
+
+NOTA: esta alfa prueba el desacoplamiento por temática. Textos genéricos y contenidos multinivel / idiomas serán refinados en fases posteriores.

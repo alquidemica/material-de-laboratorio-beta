@@ -1,0 +1,134 @@
+{
+  "1": {
+    "nombre": "Hidrógeno",
+    "descripcion": "Gas ligero y muy abundante en el universo.",
+    "nivel": 1,
+    "categorias": [
+      1
+    ],
+    "marco": "#d4f1fb",
+    "simbolo": "H",
+    "masa": "1.008"
+  },
+  "2": {
+    "nombre": "Helio",
+    "descripcion": "Gas noble poco reactivo, utilizado en criogenia.",
+    "nivel": 1,
+    "categorias": [
+      2
+    ],
+    "marco": "#eadbff",
+    "simbolo": "He",
+    "masa": "4.0026"
+  },
+  "3": {
+    "nombre": "Litio",
+    "descripcion": "Metal alcalino utilizado en baterías recargables.",
+    "nivel": 1,
+    "categorias": [
+      3
+    ],
+    "marco": "#ffe9cd",
+    "simbolo": "Li",
+    "masa": "6.94"
+  },
+  "4": {
+    "nombre": "Berilio",
+    "descripcion": "Metal ligero, rígido y tóxico; requiere manejo especializado.",
+    "nivel": 1,
+    "categorias": [
+      4
+    ],
+    "marco": "#e5f5d3",
+    "simbolo": "Be",
+    "masa": "9.0122"
+  },
+  "5": {
+    "nombre": "Boro",
+    "descripcion": "Metaloide presente en boratos y vidrios especiales.",
+    "nivel": 1,
+    "categorias": [
+      5
+    ],
+    "marco": "#f8e2c9",
+    "simbolo": "B",
+    "masa": "10.81"
+  },
+  "6": {
+    "nombre": "Carbono",
+    "descripcion": "Elemento central de la química orgánica, presente en grafito y diamante.",
+    "nivel": 1,
+    "categorias": [
+      1
+    ],
+    "marco": "#d4f1fb",
+    "simbolo": "C",
+    "masa": "12.011"
+  },
+  "7": {
+    "nombre": "Nitrógeno",
+    "descripcion": "Forma aproximadamente el 78 % del aire seco terrestre.",
+    "nivel": 1,
+    "categorias": [
+      1
+    ],
+    "marco": "#d4f1fb",
+    "simbolo": "N",
+    "masa": "14.007"
+  },
+  "8": {
+    "nombre": "Oxígeno",
+    "descripcion": "Gas esencial para la respiración aeróbica y muchas combustiones.",
+    "nivel": 1,
+    "categorias": [
+      1
+    ],
+    "marco": "#d4f1fb",
+    "simbolo": "O",
+    "masa": "15.999"
+  },
+  "9": {
+    "nombre": "Flúor",
+    "descripcion": "Halógeno muy reactivo; forma compuestos llamados fluoruros.",
+    "nivel": 1,
+    "categorias": [
+      6
+    ],
+    "marco": "#fbf0be",
+    "simbolo": "F",
+    "masa": "18.998"
+  },
+  "10": {
+    "nombre": "Neón",
+    "descripcion": "Gas noble usado en lámparas de descarga luminosa.",
+    "nivel": 1,
+    "categorias": [
+      2
+    ],
+    "marco": "#eadbff",
+    "simbolo": "Ne",
+    "masa": "20.180"
+  },
+  "11": {
+    "nombre": "Sodio",
+    "descripcion": "Metal alcalino muy reactivo; sus compuestos incluyen el cloruro de sodio.",
+    "nivel": 1,
+    "categorias": [
+      3
+    ],
+    "marco": "#ffe9cd",
+    "simbolo": "Na",
+    "masa": "22.990"
+  },
+  "12": {
+    "nombre": "Magnesio",
+    "descripcion": "Metal ligero que forma parte de la clorofila.",
+    "nivel": 1,
+    "categorias": [
+      4
+    ],
+    "marco": "#e5f5d3",
+    "simbolo": "Mg",
+    "masa": "24.305"
+  }
+}
