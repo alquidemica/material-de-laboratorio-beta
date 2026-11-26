@@ -21,7 +21,7 @@ function memoryCandidateIds(){return eligibleIds(Number($('memoryLevel').value),
 function updateMemoryCandidates(){
  const available=memoryCandidateIds().length;
  const required=Number(document.querySelector('input[name="memoryPairs"]:checked')?.value||6);
- $('memoryCandidateCount').textContent=`${available} cartas disponibles para elegir · se necesitan ${required} parejas`;
+ $('memoryCandidateCount').textContent=uiText('memoryCandidates',{count:available,pairs:required});
  $('memoryStart').disabled=loading||available<required;
 }
 $('memoryLevel').addEventListener('change',updateMemoryCandidates);
@@ -45,9 +45,9 @@ function formatMemoryTime(ms){
 }
 function updateMemoryStats(){
  const g=memoryGame;if(!g)return;
- $('memoryPairsStatus').textContent=`Parejas: ${g.matches} de ${g.pairs}`;
- $('memoryErrorsStatus').textContent=`Errores: ${g.errors}`;
- $('memoryTimeStatus').textContent=`Tiempo: ${formatMemoryTime(memoryDuration(g))}`;
+ $('memoryPairsStatus').textContent=uiText('memoryPairs',{count:g.matches,total:g.pairs});
+ $('memoryErrorsStatus').textContent=uiText('memoryErrors',{count:g.errors});
+ $('memoryTimeStatus').textContent=uiText('memoryTime',{time:formatMemoryTime(memoryDuration(g))});
 }
 /* v4.3.1: El tablero debe CABER en el viewport antes de maximizar
    la carta. No se usa la posición del tablero respecto al scroll. */
@@ -126,7 +126,7 @@ function startMemory(){
  const pairs=Number(document.querySelector('input[name="memoryPairs"]:checked')?.value||6);
  if(![4,6,9,12].includes(pairs))return;
  const candidates=memoryCandidateIds().filter(id=>cardContent(id,Number($('memoryLevel').value))?.nombre);
- if(candidates.length<pairs){alert('No hay suficientes cartas para iniciar.');return;}
+ if(candidates.length<pairs){alert(uiText('notEnoughCards'));return;}
  const ids=shuffled(candidates).slice(0,pairs);
  const cards=shuffled(ids.flatMap(id=>[{id,unique:`${id}-a`},{id,unique:`${id}-b`}]));
  memoryRound++;
