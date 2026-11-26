@@ -41,9 +41,10 @@ class CatalogManager {
    throw new Error('Catálogo: rutas de imágenes incorrectas');
   const raw=await this.readJson(new URL(manifest.datos,new URL(manifestUrl,location.href)).href);
   const rawKeys=Object.keys(raw);
-  if(rawKeys.some(key=>!(/^[1-9]\\d*$/.test(key)&&Number.isSafeInteger(Number(key)))))
+  if(rawKeys.some(key=>!(/^(0|[1-9]\d*)$/.test(key)&&Number.isSafeInteger(Number(key)))))
    throw new Error('Catálogo: identificadores de cartas inválidos');
-  const ids=rawKeys.map(Number).sort((a,b)=>a-b);
+  // El ID 0 está reservado para portada y no cuenta como carta de juego.
+  const ids=rawKeys.map(Number).filter(id=>id>0).sort((a,b)=>a-b);
   if(!ids.length)throw new Error('Catálogo sin cartas');
   const levels=new Set(manifest.niveles.map(level=>Number(level.id)));
   for(const id of ids){
