@@ -190,3 +190,19 @@ button{background:var(--tema-principal);color:var(--tema-texto);border-color:var
 /* En memoria el selector no ocupa espacio vertical durante la partida. */
 .app.memory-playing>.catalog-select-row{display:none}
 @media(max-width:480px){.catalog-select-row{padding:8px 10px;margin-bottom:8px}}
+
+/* v4.4 Alfa 5: claridad de instrucciones y controles académicos. */
+.level-note{font-size:clamp(.98rem,2vw,1.13rem);line-height:1.55;font-weight:650;opacity:1;margin:12px 0}
+#lotteryHint{font-size:clamp(.93rem,1.9vw,1.08rem);line-height:1.5}
+.random-instruction{font-size:clamp(1.05rem,2.2vw,1.25rem);line-height:1.5}
+.novelty-filter{display:flex;flex-direction:column;gap:6px;max-width:380px;font-weight:750;font-size:.97rem;margin:12px 0}
+.novelty-filter select{padding:10px 12px;border-radius:9px;border:2px solid var(--tema-borde);font:inherit;background:white;color:#111}
+.lottery-academic{max-width:620px;margin:10px auto;padding:10px 14px}
+.lottery-academic .study-fields label:first-child{flex:1 1 190px}
+.lottery-academic .study-fields label{flex:1 1 190px}
+.memory-candidate-count{font-size:.98rem;font-weight:700;margin:7px 0 12px}
+@media(max-width:480px){.level-note{font-size:.97rem}.random-instruction{font-size:1.05rem}.lottery-academic{padding:8px 10px}}
+
+/* v4.4 Alfa 5.1: configuración de lotería por encima de la carta. */
+#lotteryPanel>.lottery-academic{margin:0 auto 12px}
+#lotteryPanel>.lottery-academic.hidden{display:none!important}

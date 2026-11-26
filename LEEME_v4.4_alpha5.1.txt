@@ -1,0 +1,23 @@
+ALQUIDÉMICA v4.4 ALFA 5.1 — AJUSTES DE LOTERÍA
+
+Base: v4.4 Alfa 5 (beta). Reemplazar únicamente:
+- index.html
+- aplicacion.js
+- estilos.css
+
+NOVEDADES
+- Selección de nivel y mazo bajo los botones de modos, encima de la carta.
+- Selección académica oculta durante la partida y visible al finalizar.
+- Al finalizar, DESCRIPCIÓN cambia a CONFIGURAR.
+- CONFIGURAR devuelve a la portada y conserva la selección anterior.
+- BARAJAR DE NUEVO continúa funcionando.
+
+PRUEBAS MANUALES
+1. Abrir lotería: selector sobre carta, portada y botón DESCRIPCIÓN deshabilitado.
+2. Seleccionar preparatoria / solo novedades, iniciar: selector oculto.
+3. Llegar a última carta, pulsar TERMINAR: selector visible y CONFIGURAR.
+4. Pulsar CONFIGURAR: portada y selecciones conservadas.
+5. Iniciar nuevamente; comprobar DESCRIPCIÓN de una carta.
+6. Probar ESTUDIO LIBRE, ALEATORIO y MEMORIA; no deberían cambiar.
+
+Mantener repositorio de producción sin modificar.

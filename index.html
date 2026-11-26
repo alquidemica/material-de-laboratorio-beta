@@ -4,15 +4,15 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <title>Material de laboratorio</title>
-  <link rel="stylesheet" href="estilos.css?v=4.4a4">
-  <script src="catalogo.js?v=4.4a4" defer></script>
-  <script src="aplicacion.js?v=4.4a4" defer></script>
-  <script src="estudio.js?v=4.4a4" defer></script>
-  <script src="estudio-aleatorio.js?v=4.4a4" defer></script>
-  <script src="memoria.js?v=4.4a4" defer></script>
+  <link rel="stylesheet" href="estilos.css?v=4.4a5p1">
+  <script src="catalogo.js?v=4.4a5p1" defer></script>
+  <script src="aplicacion.js?v=4.4a5p2" defer></script>
+  <script src="estudio.js?v=4.4a5p1" defer></script>
+  <script src="estudio-aleatorio.js?v=4.4a5p1" defer></script>
+  <script src="memoria.js?v=4.4a5p1" defer></script>
 </head>
 <body>
-<div class="dev-version" id="devVersion" aria-label="Versión de pruebas">v4.4 · Alfa 4</div>
+<div class="dev-version" id="devVersion" aria-label="Versión de pruebas">v4.4 · Alfa 5.2</div>
 <main class="app" id="app">
   <div class="catalog-select-row" id="catalogSelectRow">
     <label for="catalogSelect">SELECCIONAR BARAJA</label>
@@ -30,6 +30,12 @@
   </nav>
 
   <section id="lotteryPanel">
+    <div class="lottery-academic study-tools" id="lotteryAcademic">
+      <div class="study-fields">
+        <label>Nivel académico<select id="lotteryLevel"><option value="1">Secundaria</option><option value="2">Preparatoria</option><option value="3">Universidad</option></select></label>
+        <label>Selección<select id="lotteryNovelty"><option value="all">Mazo acumulado</option><option value="new">Solo novedades del nivel</option></select></label>
+      </div>
+    </div>
     <div class="stage">
       <div class="card-shell" id="cardShell">
         <article class="card cover" id="card" role="button" tabindex="0" aria-label="Portada de la lotería">
@@ -56,6 +62,7 @@
         <label><span id="studySearchLabel">Buscar material</span><input id="studySearch" type="search" placeholder="Ej. matraz, pipeta…" autocomplete="off"></label>
         <label>Nivel académico<select id="studyLevel"><option value="1">Secundaria</option><option value="2">Preparatoria</option><option value="3">Universidad</option></select></label>
       </div>
+      <label class="novelty-filter">Ver materiales<select id="studyNovelty"><option value="all">Todos los disponibles</option><option value="new">Nuevos del nivel elegido</option></select></label>
       <p class="level-note" id="studyIntro">Catálogo inicial: todos los materiales están disponibles mientras se define su clasificación académica.</p>
       <div id="categoryFilters" class="category-filters" role="group" aria-label="Filtrar por función"></div>
       <p id="studyCount" class="study-count" role="status"></p>
@@ -70,6 +77,7 @@
         <label>Nivel académico<select id="randomLevel"><option value="1">Secundaria</option><option value="2">Preparatoria</option><option value="3">Universidad</option></select></label>
         <label>Categoría<select id="randomCategory"><option value="0">Todos</option></select></label>
       </div>
+      <label class="novelty-filter">Ver materiales<select id="randomNovelty"><option value="all">Todos los disponibles</option><option value="new">Nuevos del nivel elegido</option></select></label>
       <p class="level-note" id="randomIntro">Catálogo inicial disponible en todos los niveles. Evalúa honestamente tus respuestas.</p>
       <p id="randomCount" role="status"></p>
       <button id="randomStart">COMENZAR SESIÓN</button>
@@ -93,6 +101,11 @@
   <section id="memoryPanel" class="hidden" aria-label="Juego de memoria">
     <div id="memorySetup" class="study-tools memory-setup">
       <h2>Prepara tu partida</h2>
+      <div class="study-fields">
+        <label>Nivel académico<select id="memoryLevel"><option value="1">Secundaria</option><option value="2">Preparatoria</option><option value="3">Universidad</option></select></label>
+        <label>Selección<select id="memoryNovelty"><option value="all">Todos los disponibles</option><option value="new">Nuevos del nivel elegido</option></select></label>
+      </div>
+      <p class="memory-candidate-count" id="memoryCandidateCount" aria-live="polite"></p>
       <p class="level-note" id="memoryIntro">Busca parejas del mismo material. Las cartas se eligen al azar de la baraja seleccionada.</p>
       <fieldset class="memory-levels"><legend>Dificultad</legend>
         <label><input type="radio" name="memoryPairs" value="4"> Muy fácil · 4 parejas</label>

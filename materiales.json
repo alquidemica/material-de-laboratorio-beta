@@ -7,7 +7,19 @@
     "categorias": [
       3,
       4
-    ]
+    ],
+    "contenidoPorNivel": {
+      "2": {
+        "es": {
+          "descripcion": "Se emplea para contener, mezclar y calentar sustancias. Sus graduaciones aproximadas no sustituyen al material volumétrico calibrado."
+        }
+      },
+      "3": {
+        "es": {
+          "descripcion": "Recipiente de uso general, no volumétrico. Su selección considera resistencia química, choque térmico, geometría y compatibilidad con el procedimiento."
+        }
+      }
+    }
   },
   "2": {
     "nombre": "Matraz Erlenmeyer",
@@ -272,7 +284,19 @@
     "categorias": [
       1,
       7
-    ]
+    ],
+    "contenidoPorNivel": {
+      "2": {
+        "es": {
+          "descripcion": "Instrumento volumétrico que permite dispensar volúmenes variables con precisión, especialmente durante titulaciones."
+        }
+      },
+      "3": {
+        "es": {
+          "descripcion": "Material graduado destinado a dosificar volúmenes; la lectura del menisco, el acondicionamiento, la calibración y la incertidumbre influyen en una valoración cuantitativa."
+        }
+      }
+    }
   },
   "30": {
     "nombre": "Cristalizador",
@@ -398,5 +422,185 @@
     "categorias": [
       7
     ]
+  },
+  "43": {
+    "nombre": "Embudo Büchner",
+    "descripcion": "Permite separar sólidos de líquidos mediante filtración al vacío.",
+    "marco": "#8bc0cf",
+    "nivel": 2,
+    "categorias": [
+      5
+    ],
+    "imagen": "catalogos/laboratorio/prototipos/43.svg?v=4.4a5",
+    "experimental": true,
+    "contenidoPorNivel": {
+      "2": {
+        "es": {
+          "descripcion": "Filtración al vacío: se utiliza sobre un matraz Kitasato con papel filtro y una fuente de succión."
+        }
+      }
+    }
+  },
+  "44": {
+    "nombre": "Matraz Kitasato",
+    "descripcion": "Matraz de pared reforzada y salida lateral utilizado en filtraciones al vacío.",
+    "marco": "#8bc0cf",
+    "nivel": 2,
+    "categorias": [
+      5
+    ],
+    "imagen": "catalogos/laboratorio/prototipos/44.svg?v=4.4a5",
+    "experimental": true,
+    "contenidoPorNivel": {
+      "2": {
+        "es": {
+          "descripcion": "Su tubuladura lateral conecta al sistema de vacío; se utiliza con embudo Büchner y juntas apropiadas."
+        }
+      }
+    }
+  },
+  "45": {
+    "nombre": "Desecador",
+    "descripcion": "Recipiente cerrado que ayuda a proteger muestras de la humedad ambiental.",
+    "marco": "#8bc0cf",
+    "nivel": 2,
+    "categorias": [
+      8
+    ],
+    "imagen": "catalogos/laboratorio/prototipos/45.svg?v=4.4a5",
+    "experimental": true,
+    "contenidoPorNivel": {
+      "2": {
+        "es": {
+          "descripcion": "Su agente desecante mantiene una atmósfera seca; algunos modelos son aptos para vacío, según especificaciones."
+        }
+      }
+    }
+  },
+  "46": {
+    "nombre": "Micropipeta automática",
+    "descripcion": "Instrumento para transferir pequeños volúmenes de líquido con puntas desechables.",
+    "marco": "#8bc0cf",
+    "nivel": 2,
+    "categorias": [
+      1
+    ],
+    "imagen": "catalogos/laboratorio/prototipos/46.svg?v=4.4a5",
+    "experimental": true,
+    "contenidoPorNivel": {
+      "2": {
+        "es": {
+          "descripcion": "Se selecciona un volumen dentro del intervalo del instrumento y se emplea una punta compatible para transferir microlitros."
+        }
+      }
+    }
+  },
+  "47": {
+    "nombre": "Centrífuga",
+    "descripcion": "Equipo que separa componentes de una mezcla mediante rotación rápida.",
+    "marco": "#8bc0cf",
+    "nivel": 2,
+    "categorias": [
+      5
+    ],
+    "imagen": "catalogos/laboratorio/prototipos/47.svg?v=4.4a5",
+    "experimental": true,
+    "contenidoPorNivel": {
+      "2": {
+        "es": {
+          "descripcion": "La aceleración centrífuga facilita la sedimentación según diferencias de densidad y tamaño; las cargas deben equilibrarse."
+        }
+      }
+    }
+  },
+  "48": {
+    "nombre": "Rotavapor",
+    "descripcion": "Equipo utilizado para evaporar disolventes bajo presión reducida.",
+    "marco": "#d0a7e8",
+    "nivel": 3,
+    "categorias": [
+      5
+    ],
+    "imagen": "catalogos/laboratorio/prototipos/48.svg?v=4.4a5",
+    "experimental": true,
+    "contenidoPorNivel": {
+      "3": {
+        "es": {
+          "descripcion": "Combina rotación, calentamiento controlado, condensación y vacío para concentrar soluciones reduciendo la temperatura de ebullición."
+        }
+      }
+    }
+  },
+  "49": {
+    "nombre": "Línea de Schlenk",
+    "descripcion": "Sistema que permite manipular sustancias sensibles al aire o la humedad.",
+    "marco": "#d0a7e8",
+    "nivel": 3,
+    "categorias": [
+      4
+    ],
+    "imagen": "catalogos/laboratorio/prototipos/49.svg?v=4.4a5",
+    "experimental": true,
+    "contenidoPorNivel": {
+      "3": {
+        "es": {
+          "descripcion": "Alterna vacío y gas inerte mediante una línea doble y conexiones apropiadas para trabajar bajo atmósfera controlada."
+        }
+      }
+    }
+  },
+  "50": {
+    "nombre": "Campana de extracción",
+    "descripcion": "Equipo de protección colectiva que captura vapores y gases en el laboratorio.",
+    "marco": "#d0a7e8",
+    "nivel": 3,
+    "categorias": [
+      9
+    ],
+    "imagen": "catalogos/laboratorio/prototipos/50.svg?v=4.4a5",
+    "experimental": true,
+    "contenidoPorNivel": {
+      "3": {
+        "es": {
+          "descripcion": "La velocidad frontal y las condiciones del flujo deben verificarse; no sustituye controles adicionales de seguridad."
+        }
+      }
+    }
+  },
+  "51": {
+    "nombre": "Espectrofotómetro UV-Vis",
+    "descripcion": "Instrumento que mide la absorbancia o transmitancia de una muestra.",
+    "marco": "#d0a7e8",
+    "nivel": 3,
+    "categorias": [
+      6
+    ],
+    "imagen": "catalogos/laboratorio/prototipos/51.svg?v=4.4a5",
+    "experimental": true,
+    "contenidoPorNivel": {
+      "3": {
+        "es": {
+          "descripcion": "Registra la interacción con radiación ultravioleta y visible; puede emplearse para cuantificación con calibración y ley de Beer-Lambert."
+        }
+      }
+    }
+  },
+  "52": {
+    "nombre": "Cromatógrafo de gases",
+    "descripcion": "Equipo analítico que separa compuestos volátiles de una muestra.",
+    "marco": "#d0a7e8",
+    "nivel": 3,
+    "categorias": [
+      5
+    ],
+    "imagen": "catalogos/laboratorio/prototipos/52.svg?v=4.4a5",
+    "experimental": true,
+    "contenidoPorNivel": {
+      "3": {
+        "es": {
+          "descripcion": "Utiliza una fase móvil gaseosa y una columna para separar componentes; el detector genera señales empleadas en identificación y cuantificación."
+        }
+      }
+    }
   }
 }

@@ -2,7 +2,7 @@
   "id": "elementos-demo",
   "nombre": "Elementos químicos (demostración)",
   "tituloPortada": "LOTERÍA DE ELEMENTOS QUÍMICOS",
-  "version": 1,
+  "version": 2,
   "datos": "elementos.json",
   "imagenes": "catalogos/elementos-demo/cartas/{id}.svg?v=4.4a3",
   "portada": "catalogos/elementos-demo/cartas/0.svg?v=4.4a3",

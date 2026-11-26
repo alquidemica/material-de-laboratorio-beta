@@ -14,12 +14,31 @@ const selectedCatalog=Object.hasOwn(ALLOWED_CATALOGS,catalogFromURL)?catalogFrom
 // Única interfaz de contenido para todos los modos.
 function cardContent(id,level=1){return catalogManager.getCard(id,level);}
 function activeContentLevel(){
+ if(activeMode==='lottery')return Number($('lotteryLevel').value)||1;
+ if(activeMode==='memory')return Number($('memoryLevel').value)||1;
  if(activeMode==='study')return Number($('studyLevel').value)||1;
  if(activeMode==='random')return Number($('randomLevel').value)||1;
  return 1;
 }
 function catalogCategories(){return catalogManager.getCategories();}
-function syncButtons(){const busy=loading||changing||modalOpen||randomLocked||memoryLocked;mainBtn.disabled=busy;shuffleBtn.disabled=busy;descriptionBtn.disabled=busy||currentCard===0||!cardContent(currentCard,activeContentLevel())?.descripcion;$('studyMode').disabled=busy;$('lotteryMode').disabled=changing||modalOpen||randomLocked||memoryLocked;$('randomMode').disabled=busy;$('memoryMode').disabled=busy;}
+function syncLotteryUI(){
+ $('lotteryAcademic').classList.toggle('hidden',playing||finished);
+ descriptionBtn.classList.toggle('hidden',finished);
+}
+function syncButtons(){
+ syncLotteryUI();
+ $('lotteryLevel').disabled=playing||loading||changing||modalOpen;
+ $('lotteryNovelty').disabled=playing||loading||changing||modalOpen;
+ const busy=loading||changing||modalOpen||randomLocked||memoryLocked;
+ mainBtn.disabled=busy;
+ shuffleBtn.disabled=busy;
+ descriptionBtn.disabled=busy||(!finished&&(currentCard===0||!cardContent(currentCard,activeContentLevel())?.descripcion));
+ $('studyMode').disabled=busy;
+ $('lotteryMode').disabled=changing||modalOpen||randomLocked||memoryLocked;
+ $('randomMode').disabled=busy;
+ $('memoryMode').disabled=busy;
+}
+
 // Una sola plantilla lógica para lotería y estudio libre.
 function populateCard(element,id){
  const m=cardContent(id,activeContentLevel())||{}, art=element.querySelector('.card-art'), name=element.querySelector('.card-name');
@@ -43,7 +62,7 @@ async function loadApp(){
  try{
   $('catalogSelect').value=selectedCatalog;
   await catalogManager.load(`${ALLOWED_CATALOGS[selectedCatalog]}?v=4.4a4`);
-  TOTAL=catalogManager.getIds().length;
+  TOTAL=catalogManager.eligibleIds(1).length;
   document.title=`${catalogManager.config.nombre} · Alquidémica`;
   applyCatalogTheme(catalogManager.config);
   $('pageTitle').textContent=catalogModeTitle('lottery');
@@ -65,17 +84,29 @@ async function loadApp(){
    images.set(id,image);loaded++;status.textContent=`Preparando cartas: ${loaded} de ${pending.length}…`;
   }}
   await Promise.all(Array.from({length:Math.min(6,pending.length)},worker));
-  loading=false;renderCard(0);status.textContent=`${TOTAL} cartas · ${catalogManager.config.nombre}`;
+  loading=false;renderCard(0);updateLotterySelection();
   mainBtn.textContent='BARAJAR Y COMENZAR';syncButtons();
  }catch(e){status.textContent=`Error al cargar ${e.message}. Comprueba los archivos y recarga.`;mainBtn.textContent='ERROR DE CARGA';}
 }
 function shuffled(ids){const result=[...ids];for(let i=result.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[result[i],result[j]]=[result[j],result[i]];}return result;}
-function eligibleIds(level,category=0){return catalogManager.eligibleIds(level,category);}
-function shuffleDeck(){if(loading||changing||modalOpen||randomLocked)return;
- deck=shuffled(catalogManager.getIds());
+function eligibleIds(level,category=0,novelty='all'){return catalogManager.eligibleIds(level,category,novelty);}
+function lotterySelectionIds(){return eligibleIds(Number($('lotteryLevel').value),0,$('lotteryNovelty').value);}
+function updateLotterySelection(){
+ if(loading||playing)return;
+ const ids=lotterySelectionIds();TOTAL=ids.length;ready=false;finished=false;position=-1;deck=[];
+ renderCard(0);status.textContent=`${TOTAL} cartas disponibles · ${catalogManager.config.nombre}`;
+ mainBtn.textContent='BARAJAR Y COMENZAR';mainBtn.disabled=!TOTAL;
+ shuffleBtn.classList.add('hidden');syncButtons();
+ if(!TOTAL)mainBtn.disabled=true;
+}
+$('lotteryLevel').addEventListener('change',updateLotterySelection);
+$('lotteryNovelty').addEventListener('change',updateLotterySelection);
+function shuffleDeck(){if(loading||changing||modalOpen||randomLocked||memoryLocked)return;
+ deck=shuffled(lotterySelectionIds());
+ TOTAL=deck.length;
  position=-1;playing=false;finished=false;ready=true;renderCard(0);
  status.textContent=`Mazo barajado · ${TOTAL} cartas`;mainBtn.textContent='COMENZAR';shuffleBtn.classList.remove('hidden');syncButtons();}
-function startGame(){if(loading||changing||modalOpen)return;if(!ready)shuffleDeck();playing=true;ready=false;finished=false;mainBtn.textContent='ECHAR CARTA';drawNext();}
+function startGame(){if(loading||changing||modalOpen||!lotterySelectionIds().length)return;if(!ready)shuffleDeck();playing=true;ready=false;finished=false;mainBtn.textContent='ECHAR CARTA';drawNext();}
 function drawNext(){if(!playing||finished||loading||changing||modalOpen)return;
  if(position+1>=deck.length){endGame();return;}
  changing=true;position++;renderCard(deck[position]);status.textContent=`Carta ${position+1} de ${TOTAL}`;
@@ -90,7 +121,10 @@ function openDescription(id=currentCard,trigger=document.activeElement){if(id===
 function closeDescription(){if(!modalOpen||closeBtn.disabled)return;modalOpen=false;modal.classList.add('hidden');modal.classList.remove('cover-dialog');$('startCoverBtn').classList.add('hidden');closeBtn.textContent='ENTENDIDO';$('app').inert=false;document.body.classList.remove('modal-open');syncButtons();descriptionTrigger?.focus({preventScroll:true});descriptionTrigger=null;if(activeMode==='random')afterRandomDescription();if(activeMode==='memory')afterMemoryDescription();}
 mainBtn.addEventListener('click',()=>{if(finished){shuffleDeck();return;}if(!playing){startGame();return;}drawNext();});
 shuffleBtn.addEventListener('click',()=>{if(!playing||confirm('¿Barajar de nuevo? Se reiniciará la partida actual.'))shuffleDeck();});
-descriptionBtn.addEventListener('click',()=>openDescription(currentCard,descriptionBtn));closeBtn.addEventListener('click',closeDescription);
+descriptionBtn.addEventListener('click',()=>{
+ openDescription(currentCard,descriptionBtn);
+});
+closeBtn.addEventListener('click',closeDescription);
 document.addEventListener('keydown',e=>{if(modalOpen){if(e.code==='Escape'){e.preventDefault();closeDescription();}else if(e.key==='Tab'){e.preventDefault();const buttons=[...modal.querySelectorAll('button')].filter(b=>!b.disabled&&!b.closest('.hidden'));const i=buttons.indexOf(document.activeElement);buttons[(i+(e.shiftKey?-1:1)+buttons.length)%buttons.length]?.focus({preventScroll:true});}return;}
  if(activeMode==='lottery'&&(e.code==='Space'||e.code==='ArrowRight')&&playing&&!finished&&!e.target.closest('input,select,textarea,.mode-nav')){e.preventDefault();if(!e.repeat)drawNext();}});
 
