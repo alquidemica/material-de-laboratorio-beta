@@ -61,6 +61,7 @@ function renderCard(id){
 async function loadApp(){
  try{
   $('catalogSelect').value=selectedCatalog;
+  $('devVersion').textContent=APP_VERSION;
   await catalogManager.load(`${ALLOWED_CATALOGS[selectedCatalog]}?v=4.4a4`);
   TOTAL=catalogManager.eligibleIds(1).length;
   document.title=`${catalogManager.config.nombre} · Alquidémica`;
@@ -81,7 +82,7 @@ async function loadApp(){
   async function worker(){while(next<pending.length){
    const id=pending[next++],url=catalogManager.imageUrl(id),image=new Image();
    await new Promise((resolve,reject)=>{image.onload=resolve;image.onerror=()=>reject(new Error(url));image.src=url;if(image.complete)image.naturalWidth?resolve():reject(new Error(url));});
-   images.set(id,image);loaded++;status.textContent=`Preparando cartas: ${loaded} de ${pending.length}…`;
+   images.set(id,image);loaded++;status.textContent=uiText('catalogLoading',{count:loaded,total:pending.length});
   }}
   await Promise.all(Array.from({length:Math.min(6,pending.length)},worker));
   loading=false;renderCard(0);updateLotterySelection();
@@ -94,7 +95,7 @@ function lotterySelectionIds(){return eligibleIds(Number($('lotteryLevel').value
 function updateLotterySelection(){
  if(loading||playing)return;
  const ids=lotterySelectionIds();TOTAL=ids.length;ready=false;finished=false;position=-1;deck=[];
- renderCard(0);status.textContent=`${TOTAL} cartas disponibles · ${catalogManager.config.nombre}`;
+ renderCard(0);status.textContent=uiText('catalogAvailable',{count:TOTAL,catalog:catalogManager.config.nombre});
  mainBtn.textContent='BARAJAR Y COMENZAR';mainBtn.disabled=!TOTAL;
  shuffleBtn.classList.add('hidden');syncButtons();
  if(!TOTAL)mainBtn.disabled=true;
@@ -105,14 +106,14 @@ function shuffleDeck(){if(loading||changing||modalOpen||randomLocked||memoryLock
  deck=shuffled(lotterySelectionIds());
  TOTAL=deck.length;
  position=-1;playing=false;finished=false;ready=true;renderCard(0);
- status.textContent=`Mazo barajado · ${TOTAL} cartas`;mainBtn.textContent='COMENZAR';shuffleBtn.classList.remove('hidden');syncButtons();}
+ status.textContent=uiText('catalogShuffled',{count:TOTAL});mainBtn.textContent='COMENZAR';shuffleBtn.classList.remove('hidden');syncButtons();}
 function startGame(){if(loading||changing||modalOpen||!lotterySelectionIds().length)return;if(!ready)shuffleDeck();playing=true;ready=false;finished=false;mainBtn.textContent='ECHAR CARTA';drawNext();}
 function drawNext(){if(!playing||finished||loading||changing||modalOpen)return;
  if(position+1>=deck.length){endGame();return;}
  changing=true;position++;renderCard(deck[position]);status.textContent=`Carta ${position+1} de ${TOTAL}`;
  if(position===deck.length-1)mainBtn.textContent='TERMINAR';
  requestAnimationFrame(()=>requestAnimationFrame(()=>{changing=false;syncButtons();}));}
-function endGame(){finished=true;playing=false;ready=false;status.innerHTML=`<span class="finished">¡LOTERÍA!</span><br>Se han echado las ${TOTAL} cartas.`;mainBtn.textContent='BARAJAR DE NUEVO';shuffleBtn.classList.add('hidden');syncButtons();}
+function endGame(){finished=true;playing=false;ready=false;status.innerHTML=`<span class="finished">¡LOTERÍA!</span><br>${uiText('lotteryFinished',{count:TOTAL})}`;mainBtn.textContent='BARAJAR DE NUEVO';shuffleBtn.classList.add('hidden');syncButtons();}
 function openDescription(id=currentCard,trigger=document.activeElement){if(id===0||!cardContent(id,activeContentLevel())||loading||changing||modalOpen)return;
  $('randomRating').classList.add('hidden');$('randomFeedback').classList.add('hidden');closeBtn.disabled=false;closeBtn.classList.remove('hidden');
  const content=cardContent(id,activeContentLevel());
