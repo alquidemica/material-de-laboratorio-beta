@@ -121,13 +121,7 @@ function openDescription(id=currentCard,trigger=document.activeElement){if(id===
 function closeDescription(){if(!modalOpen||closeBtn.disabled)return;modalOpen=false;modal.classList.add('hidden');modal.classList.remove('cover-dialog');$('startCoverBtn').classList.add('hidden');closeBtn.textContent='ENTENDIDO';$('app').inert=false;document.body.classList.remove('modal-open');syncButtons();descriptionTrigger?.focus({preventScroll:true});descriptionTrigger=null;if(activeMode==='random')afterRandomDescription();if(activeMode==='memory')afterMemoryDescription();}
 mainBtn.addEventListener('click',()=>{if(finished){shuffleDeck();return;}if(!playing){startGame();return;}drawNext();});
 shuffleBtn.addEventListener('click',()=>{if(!playing||confirm('¿Barajar de nuevo? Se reiniciará la partida actual.'))shuffleDeck();});
-function configureLottery(){
- if(activeMode!=='lottery'||!finished||loading||changing||modalOpen)return;
- // Regresa a la portada sin modificar el nivel ni la seleccion elegidos.
- updateLotterySelection();
-}
 descriptionBtn.addEventListener('click',()=>{
- if(finished){configureLottery();return;}
  openDescription(currentCard,descriptionBtn);
 });
 closeBtn.addEventListener('click',closeDescription);
