@@ -1,0 +1,7 @@
+Alquidémica v4.4 Alfa 5.2 — menú académico de Lotería
+
+Reemplazar index.html y aplicacion.js del repositorio beta.
+
+Cambios: el menú académico se ve en la portada (inicio o después de CONFIGURAR), se oculta durante la partida y sigue oculto al terminar.
+
+Pruebas: portada -> jugar -> TERMINAR -> CONFIGURAR -> portada con menú visible. BARAJAR DE NUEVO conserva la configuración del mazo.

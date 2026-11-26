@@ -22,8 +22,8 @@ function activeContentLevel(){
 }
 function catalogCategories(){return catalogManager.getCategories();}
 function syncLotteryUI(){
- // El formulario academico no interrumpe una partida; vuelve al terminar o configurar.
- $('lotteryAcademic').classList.toggle('hidden',playing);
+ // La configuracion se muestra en la portada, nunca durante la partida ni en resultados.
+ $('lotteryAcademic').classList.toggle('hidden',playing||finished);
  const configuring=finished&&activeMode==='lottery';
  descriptionBtn.textContent=configuring?'CONFIGURAR':'DESCRIPCIÓN';
  descriptionBtn.classList.toggle('secondary',configuring);
