@@ -21,7 +21,28 @@ function activeContentLevel(){
  return 1;
 }
 function catalogCategories(){return catalogManager.getCategories();}
-function syncButtons(){$('lotteryLevel').disabled=playing||loading||changing||modalOpen;$('lotteryNovelty').disabled=playing||loading||changing||modalOpen;const busy=loading||changing||modalOpen||randomLocked||memoryLocked;mainBtn.disabled=busy;shuffleBtn.disabled=busy;descriptionBtn.disabled=busy||currentCard===0||!cardContent(currentCard,activeContentLevel())?.descripcion;$('studyMode').disabled=busy;$('lotteryMode').disabled=changing||modalOpen||randomLocked||memoryLocked;$('randomMode').disabled=busy;$('memoryMode').disabled=busy;}
+function syncLotteryUI(){
+ // El formulario academico no interrumpe una partida; vuelve al terminar o configurar.
+ $('lotteryAcademic').classList.toggle('hidden',playing);
+ const configuring=finished&&activeMode==='lottery';
+ descriptionBtn.textContent=configuring?'CONFIGURAR':'DESCRIPCIÓN';
+ descriptionBtn.classList.toggle('secondary',configuring);
+ descriptionBtn.classList.toggle('description-btn',!configuring);
+}
+function syncButtons(){
+ syncLotteryUI();
+ $('lotteryLevel').disabled=playing||loading||changing||modalOpen;
+ $('lotteryNovelty').disabled=playing||loading||changing||modalOpen;
+ const busy=loading||changing||modalOpen||randomLocked||memoryLocked;
+ mainBtn.disabled=busy;
+ shuffleBtn.disabled=busy;
+ descriptionBtn.disabled=busy||(!finished&&(currentCard===0||!cardContent(currentCard,activeContentLevel())?.descripcion));
+ $('studyMode').disabled=busy;
+ $('lotteryMode').disabled=changing||modalOpen||randomLocked||memoryLocked;
+ $('randomMode').disabled=busy;
+ $('memoryMode').disabled=busy;
+}
+
 // Una sola plantilla lógica para lotería y estudio libre.
 function populateCard(element,id){
  const m=cardContent(id,activeContentLevel())||{}, art=element.querySelector('.card-art'), name=element.querySelector('.card-name');
@@ -104,7 +125,16 @@ function openDescription(id=currentCard,trigger=document.activeElement){if(id===
 function closeDescription(){if(!modalOpen||closeBtn.disabled)return;modalOpen=false;modal.classList.add('hidden');modal.classList.remove('cover-dialog');$('startCoverBtn').classList.add('hidden');closeBtn.textContent='ENTENDIDO';$('app').inert=false;document.body.classList.remove('modal-open');syncButtons();descriptionTrigger?.focus({preventScroll:true});descriptionTrigger=null;if(activeMode==='random')afterRandomDescription();if(activeMode==='memory')afterMemoryDescription();}
 mainBtn.addEventListener('click',()=>{if(finished){shuffleDeck();return;}if(!playing){startGame();return;}drawNext();});
 shuffleBtn.addEventListener('click',()=>{if(!playing||confirm('¿Barajar de nuevo? Se reiniciará la partida actual.'))shuffleDeck();});
-descriptionBtn.addEventListener('click',()=>openDescription(currentCard,descriptionBtn));closeBtn.addEventListener('click',closeDescription);
+function configureLottery(){
+ if(activeMode!=='lottery'||!finished||loading||changing||modalOpen)return;
+ // Regresa a la portada sin modificar el nivel ni la seleccion elegidos.
+ updateLotterySelection();
+}
+descriptionBtn.addEventListener('click',()=>{
+ if(finished){configureLottery();return;}
+ openDescription(currentCard,descriptionBtn);
+});
+closeBtn.addEventListener('click',closeDescription);
 document.addEventListener('keydown',e=>{if(modalOpen){if(e.code==='Escape'){e.preventDefault();closeDescription();}else if(e.key==='Tab'){e.preventDefault();const buttons=[...modal.querySelectorAll('button')].filter(b=>!b.disabled&&!b.closest('.hidden'));const i=buttons.indexOf(document.activeElement);buttons[(i+(e.shiftKey?-1:1)+buttons.length)%buttons.length]?.focus({preventScroll:true});}return;}
  if(activeMode==='lottery'&&(e.code==='Space'||e.code==='ArrowRight')&&playing&&!finished&&!e.target.closest('input,select,textarea,.mode-nav')){e.preventDefault();if(!e.repeat)drawNext();}});
 

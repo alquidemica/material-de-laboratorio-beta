@@ -202,3 +202,7 @@ button{background:var(--tema-principal);color:var(--tema-texto);border-color:var
 .lottery-academic .study-fields label{flex:1 1 190px}
 .memory-candidate-count{font-size:.98rem;font-weight:700;margin:7px 0 12px}
 @media(max-width:480px){.level-note{font-size:.97rem}.random-instruction{font-size:1.05rem}.lottery-academic{padding:8px 10px}}
+
+/* v4.4 Alfa 5.1: configuración de lotería por encima de la carta. */
+#lotteryPanel>.lottery-academic{margin:0 auto 12px}
+#lotteryPanel>.lottery-academic.hidden{display:none!important}

@@ -4,15 +4,15 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <title>Material de laboratorio</title>
-  <link rel="stylesheet" href="estilos.css?v=4.4a5">
-  <script src="catalogo.js?v=4.4a5" defer></script>
-  <script src="aplicacion.js?v=4.4a5" defer></script>
-  <script src="estudio.js?v=4.4a5" defer></script>
-  <script src="estudio-aleatorio.js?v=4.4a5" defer></script>
-  <script src="memoria.js?v=4.4a5" defer></script>
+  <link rel="stylesheet" href="estilos.css?v=4.4a5p1">
+  <script src="catalogo.js?v=4.4a5p1" defer></script>
+  <script src="aplicacion.js?v=4.4a5p1" defer></script>
+  <script src="estudio.js?v=4.4a5p1" defer></script>
+  <script src="estudio-aleatorio.js?v=4.4a5p1" defer></script>
+  <script src="memoria.js?v=4.4a5p1" defer></script>
 </head>
 <body>
-<div class="dev-version" id="devVersion" aria-label="Versión de pruebas">v4.4 · Alfa 5</div>
+<div class="dev-version" id="devVersion" aria-label="Versión de pruebas">v4.4 · Alfa 5.1</div>
 <main class="app" id="app">
   <div class="catalog-select-row" id="catalogSelectRow">
     <label for="catalogSelect">SELECCIONAR BARAJA</label>
@@ -30,6 +30,12 @@
   </nav>
 
   <section id="lotteryPanel">
+    <div class="lottery-academic study-tools" id="lotteryAcademic">
+      <div class="study-fields">
+        <label>Nivel académico<select id="lotteryLevel"><option value="1">Secundaria</option><option value="2">Preparatoria</option><option value="3">Universidad</option></select></label>
+        <label>Selección<select id="lotteryNovelty"><option value="all">Mazo acumulado</option><option value="new">Solo novedades del nivel</option></select></label>
+      </div>
+    </div>
     <div class="stage">
       <div class="card-shell" id="cardShell">
         <article class="card cover" id="card" role="button" tabindex="0" aria-label="Portada de la lotería">
@@ -40,12 +46,6 @@
             <div id="cardName" class="card-name">LOTERÍA DE MATERIAL DEL LABORATORIO</div>
           </div>
         </article>
-      </div>
-    </div>
-    <div class="lottery-academic study-tools">
-      <div class="study-fields">
-        <label>Nivel académico<select id="lotteryLevel"><option value="1">Secundaria</option><option value="2">Preparatoria</option><option value="3">Universidad</option></select></label>
-        <label>Selección<select id="lotteryNovelty"><option value="all">Mazo acumulado</option><option value="new">Solo novedades del nivel</option></select></label>
       </div>
     </div>
     <div id="status" class="status">Preparando cartas…</div>
