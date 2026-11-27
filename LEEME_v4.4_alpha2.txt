@@ -1,0 +1,22 @@
+ALQUIDÉMICA — v4.4 ALFA 2 — INTEGRACIÓN DEL CATÁLOGO
+
+Base: v4.4 Alfa 1 (validada por el usuario en cinco pruebas funcionales).
+
+Objetivo: los cuatro modos consultan nombres, marcos, descripciones e identificadores mediante catalogManager, sin leer directamente el objeto de materiales.json.
+
+Cambios: catalogo.js, aplicacion.js, estudio.js, estudio-aleatorio.js, memoria.js, index.html.
+
+No cambia el aspecto, las reglas, las imágenes ni las opciones visibles.
+Las descripciones por nivel usan el texto base si no existe versión especializada.
+No hay selector de temática ni una segunda baraja todavía; eso corresponde a la siguiente fase de pruebas de reutilización.
+
+INSTALACIÓN EN BETA
+Reemplaza los seis archivos indicados; conserva catalogos/laboratorio.json, materiales.json, estilos.css y las imágenes actuales.
+No publicar en producción sin repetir las cinco pruebas funcionales de Alfa 1.
+
+PRUEBAS
+1. Lotería: portada, 42 cartas y descripciones.
+2. Estudio libre: filtros y búsqueda con acentos, fichas correctas.
+3. Estudio aleatorio: repaso, puntuación y cierre automático.
+4. Memorama: cuatro niveles, descripción al acertar, rotación y resultados.
+5. Cambio de modo y vuelta: preservación de estado.

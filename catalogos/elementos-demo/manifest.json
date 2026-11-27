@@ -1,0 +1,73 @@
+{
+  "id": "elementos-demo",
+  "nombre": "Elementos químicos (demostración)",
+  "tituloPortada": "LOTERÍA DE ELEMENTOS QUÍMICOS",
+  "version": 2,
+  "datos": "elementos.json",
+  "imagenes": "catalogos/elementos-demo/cartas/{id}.svg?v=4.4a3",
+  "portada": "catalogos/elementos-demo/cartas/0.svg?v=4.4a3",
+  "ejemploBusqueda": "Ej. oxígeno, carbono…",
+  "niveles": [
+    {
+      "id": 1,
+      "nombre": "Secundaria"
+    },
+    {
+      "id": 2,
+      "nombre": "Preparatoria"
+    },
+    {
+      "id": 3,
+      "nombre": "Universidad"
+    }
+  ],
+  "categorias": {
+    "1": "No metales",
+    "2": "Gases nobles",
+    "3": "Metales alcalinos",
+    "4": "Alcalinotérreos",
+    "5": "Metaloides",
+    "6": "Halógenos"
+  },
+  "idiomaBase": "es",
+  "idiomasDisponibles": [
+    "es"
+  ],
+  "tema": {
+    "fondo": {
+      "tipo": "degradado",
+      "valor": "radial-gradient(ellipse at 20% 15%,#355082 0%,transparent 45%),radial-gradient(ellipse at 85% 80%,#175c67 0%,transparent 50%),linear-gradient(145deg,#101b3d,#172d56 55%,#103c46)",
+      "color": "#101b3d"
+    },
+    "colores": {
+      "acento": "#b5f5cc",
+      "principal": "#e9ba6d",
+      "secundario": "#eaf3ff",
+      "texto": "#101827",
+      "panel": "#1b3153",
+      "panelTexto": "#f1f6ff",
+      "modal": "#edf3ff",
+      "modalTexto": "#101b34",
+      "borde": "#14223a",
+      "reversoInicio": "#697dd9",
+      "reversoFin": "#30467c"
+    }
+  },
+  "titulos": {
+    "lottery": "Lotería de elementos",
+    "study": "Explorar elementos",
+    "random": "Estudio de elementos",
+    "memory": "Memoria de elementos"
+  },
+  "instrucciones": {
+    "loteriaPista": "Reconoce el símbolo y el nombre del elemento. Avanza con Espacio o →.",
+    "preguntaInicio": "¿Comenzamos la lotería de elementos?",
+    "buscarEtiqueta": "Buscar elemento",
+    "buscarEjemplo": "Ej. oxígeno, carbono…",
+    "estudioNota": "Explora los elementos químicos por familia, nombre o símbolo. Esta baraja es una demostración.",
+    "estudioVacio": "No hay elementos que coincidan con tu búsqueda o familia.",
+    "aleatorioPreparacion": "Evalúa cuánto reconoces los elementos químicos y repasa los que necesites.",
+    "aleatorioInstruccion": "Intenta recordar el nombre, símbolo y características del elemento antes de revelar la ficha.",
+    "memoriaPreparacion": "Encuentra dos cartas del mismo elemento. El juego selecciona parejas al azar de esta baraja de prueba."
+  }
+}

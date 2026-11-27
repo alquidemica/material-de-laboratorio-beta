@@ -6,27 +6,25 @@ const normalizeSearch = value => value.normalize('NFD').replace(/[\u0300-\u036f]
 
 function getStudyIds(){
  const query=normalizeSearch(studySearch.value), level=Number(studyLevel.value);
- return Object.keys(materials).map(Number).filter(id=>id>0).sort((a,b)=>a-b).filter(id=>{
-  const m=materials[id];
-  return m.nivel<=level && (!selectedCategory||m.categorias.includes(selectedCategory)) && normalizeSearch(m.nombre).includes(query);
- });
+ return eligibleIds(level,selectedCategory,$('studyNovelty').value).filter(id=>normalizeSearch(cardContent(id,level).nombre).includes(query));
 }
 function renderStudyGrid(){
+ const level=Number(studyLevel.value);
  const ids=getStudyIds(), fragment=document.createDocumentFragment();
  for(const id of ids){
   const tile=$('studyCardTemplate').content.firstElementChild.cloneNode(true);
   tile.dataset.id=id;
-  tile.setAttribute('aria-label',`Carta ${id}: ${materials[id].nombre}. Ver descripción`);
+  tile.setAttribute('aria-label',`Carta ${id}: ${cardContent(id,level).nombre}. Ver descripción`);
   populateCard(tile.querySelector('.card'),id);
   fragment.append(tile);
  }
  studyGrid.replaceChildren(fragment);
- $('studyCount').textContent=`${ids.length} ${ids.length===1?'material encontrado':'materiales encontrados'}`;
+ $('studyCount').textContent=ids.length===1?'1 carta encontrada':uiText('cardFound',{count:ids.length});
  $('emptyStudy').classList.toggle('hidden',ids.length!==0);
 }
 function initStudy(){
  if(studyInitialized)return;
- for(const [id,label] of [[0,'Todos'],...Object.entries(CATEGORIES)]){
+ for(const [id,label] of [[0,'Todos'],...Object.entries(catalogCategories())]){
   const button=document.createElement('button');
   button.type='button';button.dataset.category=id;button.textContent=label;
   button.setAttribute('aria-pressed',String(Number(id)===selectedCategory));
@@ -35,24 +33,31 @@ function initStudy(){
  studyInitialized=true;renderStudyGrid();
 }
 function switchMode(mode){
- if(loading||changing||modalOpen||mode===activeMode)return;
+ if(loading||changing||modalOpen||mode===activeMode||randomLocked||memoryLocked)return;
  if(activeMode==='study')studyScroll=window.scrollY;
  activeMode=mode;
  const studying=mode==='study';
- $('lotteryPanel').classList.toggle('hidden',studying);
+ $('lotteryPanel').classList.toggle('hidden',mode!=='lottery');
  $('studyPanel').classList.toggle('hidden',!studying);
- $('app').classList.toggle('study-active',studying);
- document.body.classList.toggle('study-active',studying);
- $('pageTitle').textContent=studying?'Estudio libre · Material de laboratorio':'Lotería de material del laboratorio';
- $('lotteryMode').setAttribute('aria-pressed',String(!studying));
+ $('randomPanel').classList.toggle('hidden',mode!=='random');
+ $('memoryPanel').classList.toggle('hidden',mode!=='memory');
+ $('app').classList.toggle('study-active',studying||mode==='memory');
+ document.body.classList.toggle('study-active',studying||mode==='memory');
+ $('pageTitle').textContent=catalogModeTitle(mode);
+ $('lotteryMode').setAttribute('aria-pressed',String(mode==='lottery'));
  $('studyMode').setAttribute('aria-pressed',String(studying));
+ $('randomMode').setAttribute('aria-pressed',String(mode==='random'));
+ $('memoryMode').setAttribute('aria-pressed',String(mode==='memory'));
  if(studying)initStudy();
+ if(mode==='random')initRandom();
+ if(mode==='memory')initMemory();
  window.scrollTo(0,studying?studyScroll:0);
 }
 $('lotteryMode').addEventListener('click',()=>switchMode('lottery'));
 $('studyMode').addEventListener('click',()=>switchMode('study'));
 studySearch.addEventListener('input',renderStudyGrid);
 studyLevel.addEventListener('change',renderStudyGrid);
+$('studyNovelty').addEventListener('change',renderStudyGrid);
 $('categoryFilters').addEventListener('click',event=>{
  const button=event.target.closest('button[data-category]');if(!button)return;
  selectedCategory=Number(button.dataset.category);

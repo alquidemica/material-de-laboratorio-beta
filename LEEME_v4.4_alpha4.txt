@@ -1,0 +1,29 @@
+ALQUIDÉMICA v4.4 ALFA 4 — TEMAS POR CATÁLOGO
+=============================================
+Instalar SOLO en material-de-laboratorio-beta.
+
+REEMPLAZAR:
+ index.html, estilos.css, catalogo.js, aplicacion.js, estudio.js,
+ catalogos/laboratorio.json, catalogos/elementos-demo/manifest.json
+
+CONSERVAR:
+ memoria.js, estudio-aleatorio.js, materiales.json, imágenes y elementos SVG.
+
+CAMBIOS:
+ - Selector «SELECCIONAR BARAJA» en cuadro superior, por encima del título.
+ - Paletas configurables en el campo tema.colores de cada manifest.
+ - Fondo por baraja: imagen o degradado.
+ - Títulos e instrucciones definidos en el manifiesto.
+ - Laboratorio conserva su estética; elementos demo obtiene paleta propia.
+ - Se conserva el bloqueo del selector al jugar memoria o estudio aleatorio.
+ - Durante una partida de memoria, el selector se oculta para liberar espacio.
+
+PRUEBAS:
+ [ ] Laboratorio conserva los colores/fondo y cuatro modos.
+ [ ] Elementos cambia fondo, colores, título y textos de instrucciones.
+ [ ] Selector está arriba y se lee sobre ambos fondos.
+ [ ] Cambiar de tema conserva selección de catálogo tras recarga.
+ [ ] En memoria el tablero se adapta y selector se oculta al jugar.
+ [ ] Modales (información, comenzar) son legibles en ambos temas.
+
+No incluye pantalla de bienvenida: se implementará más adelante.

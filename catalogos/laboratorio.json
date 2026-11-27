@@ -1,0 +1,74 @@
+{
+  "id": "laboratorio",
+  "nombre": "Material de laboratorio",
+  "version": 2,
+  "datos": "../materiales.json",
+  "imagenes": "cartas/{id}.webp?v=4.4a5",
+  "portada": "cartas/0.webp?v=4.4a5",
+  "niveles": [
+    {
+      "id": 1,
+      "nombre": "Secundaria"
+    },
+    {
+      "id": 2,
+      "nombre": "Preparatoria"
+    },
+    {
+      "id": 3,
+      "nombre": "Universidad"
+    }
+  ],
+  "categorias": {
+    "1": "Medición volumétrica",
+    "2": "Sujeción y soporte",
+    "3": "Calentamiento",
+    "4": "Contención y reacción",
+    "5": "Separación y destilación",
+    "6": "Medición de propiedades",
+    "7": "Manipulación y transferencia",
+    "8": "Almacenamiento y cierre",
+    "9": "Limpieza"
+  },
+  "idiomaBase": "es",
+  "idiomasDisponibles": [
+    "es"
+  ],
+  "tema": {
+    "fondo": {
+      "tipo": "imagen",
+      "valor": "fondo-laboratorio.webp",
+      "color": "#15578b"
+    },
+    "colores": {
+      "acento": "#21d9ff",
+      "principal": "#ffd43b",
+      "secundario": "#fff8e8",
+      "texto": "#101010",
+      "panel": "#0d2340",
+      "panelTexto": "#fff8e8",
+      "modal": "#fff8e8",
+      "modalTexto": "#101010",
+      "borde": "#111111",
+      "reversoInicio": "#32c8d8",
+      "reversoFin": "#157b9e"
+    }
+  },
+  "titulos": {
+    "lottery": "Lotería",
+    "study": "Estudio libre",
+    "random": "Estudio aleatorio",
+    "memory": "Memoria"
+  },
+  "instrucciones": {
+    "loteriaPista": "Durante la partida también puedes usar Espacio o →",
+    "preguntaInicio": "¿Comenzamos la lotería?",
+    "buscarEtiqueta": "Buscar material",
+    "buscarEjemplo": "Ej. matraz, pipeta…",
+    "estudioNota": "Barajas acumulativas: preparatoria incluye secundaria y universidad incluye todos los materiales. Puedes mostrar solo los nuevos de un nivel.",
+    "estudioVacio": "No se encontraron materiales. Prueba otra búsqueda o categoría.",
+    "aleatorioPreparacion": "Selecciona nivel y filtro. Los materiales de preparatoria y universidad incluyen tarjetas conceptuales de prueba.",
+    "aleatorioInstruccion": "Trata de decir la función del material antes de revelar su descripción.",
+    "memoriaPreparacion": "Encuentra parejas al azar del nivel seleccionado. Las nuevas cartas académicas son prototipos."
+  }
+}
