@@ -19,7 +19,8 @@
           "descripcion": "Recipiente de uso general, no volumétrico. Su selección considera resistencia química, choque térmico, geometría y compatibilidad con el procedimiento."
         }
       }
-    }
+    },
+    "funcionEsencial": "Contener, mezclar y calentar sustancias; sus marcas solo permiten estimar volúmenes."
   },
   "2": {
     "nombre": "Matraz Erlenmeyer",
@@ -29,7 +30,8 @@
     "categorias": [
       3,
       4
-    ]
+    ],
+    "funcionEsencial": "Contener y mezclar líquidos con menor riesgo de derrames durante la agitación."
   },
   "3": {
     "nombre": "Tubo de ensayo",

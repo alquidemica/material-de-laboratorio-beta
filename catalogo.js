@@ -54,6 +54,14 @@ class CatalogManager {
        Object.keys(m.contenidoPorNivel).some(n=>!levels.has(Number(n))))
      throw new Error(`Ficha ${id}: contenidoPorNivel inválido`);
    }
+   // Campo opcional durante la transición editorial de las 110 cartas.
+   // Cuando se proporciona, debe ser texto no vacío en cualquiera de sus variantes.
+   const validEssential=value=>value===undefined||(typeof value==='string'&&value.trim().length>0);
+   if(!validEssential(m?.funcionEsencial))throw new Error(`Ficha ${id}: funcionEsencial invalida`);
+   const translated=Object.values(m?.traducciones||{});
+   const tierVariants=Object.values(m?.contenidoPorNivel||{}).flatMap(block=>Object.values(block||{}));
+   if([...translated,...tierVariants].some(block=>block&&typeof block==='object'&&!validEssential(block.funcionEsencial)))
+    throw new Error(`Ficha ${id}: funcionEsencial invalida`);
    if(!m||typeof m.nombre!=='string'||!m.nombre.trim()||typeof m.descripcion!=='string'||!m.descripcion.trim()||!levels.has(m.nivel)||!Array.isArray(m.categorias)||!m.categorias.length||m.categorias.some(cat=>!Object.hasOwn(manifest.categorias,cat)))throw new Error(`Ficha ${id} incompleta`);
   }
   this.config=manifest;this.items=raw;this.ids=ids;this.categories=manifest.categorias;this.locale=manifest.idiomaBase||'es';
@@ -96,6 +104,14 @@ class CatalogManager {
  getIds(){return [...this.ids];}
  getCategories(){return {...this.categories};}
  getCard(id,level=1,locale=this.locale){return this.getContent(id,{level,locale});}
+ // Función breve separada de la descripción. Puede variar por idioma y nivel.
+ // Si todavía no se ha redactado, devuelve null sin afectar los juegos.
+ getEssentialFunction(id,level=1,locale=this.locale){
+  const content=this.getCard(id,level,locale);
+  const value=content?.funcionEsencial;
+  return typeof value==='string'&&value.trim()?value.trim():null;
+ }
+
 
 }
 const catalogManager=new CatalogManager();
